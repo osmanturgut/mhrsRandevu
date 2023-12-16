@@ -4,6 +4,7 @@ from hastanePayload import get_hospital_payload
 import logging
 import random
 from threading import Event, Lock
+import pushbullet
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
 logger = logging.getLogger(__name__)
@@ -31,7 +32,6 @@ class Authentication:
         proxies = {
             "https": self.selected_ip
         }
-
         headers = {'Content-Type': 'application/json'}
         response = requests.post(self.BASE_URL + "vatandas/login", headers=headers, json=payload, proxies=proxies, verify=True)
         if response.status_code == 200:
@@ -67,7 +67,7 @@ class Authentication:
         proxies = {
             "https": self.selected_ip
         }
-        slotListRequest = requests.post(self.BASE_URL + "kurum-rss/randevu/slot-sorgulama/slot", headers=self.headers,json=payload2, proxies=proxies, verify=True)
+        slotListRequest = requests.post(self.BASE_URL + "kurum-rss/randevu/slot-sorgulama/slot", headers=self.headers, json=payload2, proxies=proxies, verify=True)
         if slotListRequest.status_code == 200:
             return slotListRequest.json()
 
@@ -95,10 +95,8 @@ class Authentication:
 
         # tüm işlemler bittikten sonra uygun randevuları logla
         #self.aktifRandevuList(self.tckn, local_available_slots)
-
     def aktifRandevuList(self, tckn, available_slots):
-        # burda tüm işlemler bittikten sonra uygun randevuları logla  randevulari_filtrele() den çağırıp görebiliriz  isteğe bağlı!
-        with (self.lock):
+        with self.lock:
             for selected_slot in available_slots:
                 log_message = f" USERS: {tckn}",\
                               f"id={selected_slot['slot']['id']}, " \
@@ -106,6 +104,7 @@ class Authentication:
                               f"baslangicZamani={selected_slot['slot']['baslangicZamani']}, " \
                               f"bitisZamani={selected_slot['slot']['bitisZamani']}"
                 logger.info(log_message)
+
     def randevuTanimla(self, slotListKalanKullanim):
         slot = slotListKalanKullanim['slot']
         payload3 = {
@@ -115,13 +114,14 @@ class Authentication:
             "baslangicZamani": slot['baslangicZamani'],
             "bitisZamani": slot['bitisZamani'],
         }
+        self.last_selected_slot = payload3
 
         logger.info(
             f"Uygun Randevu Bulundu. {self.tckn} Kullanıcıya Ekleniyor.. ***TARİH :{payload3['baslangicZamani']} fkSlotId={payload3['fkSlotId']} IP={self.selected_ip.split('@')[1]} ***")
         proxies = {
             "https": self.selected_ip
         }
-        randevuEkle = requests.post(self.BASE_URL + "kurum/randevu/randevu-ekle", headers=self.headers, json=payload3,proxies=proxies, verify=True)
+        randevuEkle = requests.post(self.BASE_URL + "kurum/randevu/randevu-ekle", headers=self.headers, json=payload3, proxies=proxies, verify=True)
 
         if randevuEkle.status_code == 200:
             logger.info(f"RANDEVU BAŞARIYLA ALINDI  - Kullanıcı: {self.tckn}  ***TARİH :{payload3['baslangicZamani']} fkSlotId={payload3['fkSlotId']} İstek atılan IP={self.selected_ip.split('@')[1]} ***")
@@ -134,6 +134,12 @@ class Authentication:
         elif randevuEkle.status_code == 400:
             logger.critical(f"{self.tckn} {randevuEkle.json()['errors'][0]['mesaj']} <<MHRS Tarafından Bloklandı..! {self.tckn} ***TARİH :{payload3['baslangicZamani']} fkSlotId={payload3['fkSlotId']}İstek atılan IP={self.selected_ip.split('@')[1]} ***")
 
+    def send_notification(self, api_key, title, body):
+        pb = pushbullet.Pushbullet(api_key)
+        if hasattr(self, 'last_selected_slot'):
+            body += f" - Tarih: {self.last_selected_slot['baslangicZamani']}"
+        push = pb.push_note(title=title, body=body)
+
 def process_user(user_info, ip_info, lock):
     payload_name = user_info.get("hastaneBilgisi")
     hospital_payload = get_hospital_payload(payload_name)
@@ -142,21 +148,30 @@ def process_user(user_info, ip_info, lock):
     jwtToken = Authentication(user_info, hospital_payload, selected_ip, lock)
     jwtToken.randevulari_filtrele()
 
+    # Bildirim gönderme işlemini gerçekleştir  kapatılarak bildirim gönderme engellenir
+    if jwtToken.randevu_alindi.is_set():
+        jwtToken.send_notification('o.iJ9Wip4Q5NEcu5B8CxdCsGCfwQHnCO8Y', 'RANDEVU BAŞRIYLA ALINDI', f"Kullanıcı: {user_info['tckn']}")
+
+
 if __name__ == '__main__':
     users = [
+        {"tckn": "33814401824", "password": "2015Veli", "hastaneBilgisi": "testElazig"},
+        {"tckn": "33790402648", "password": "Trgtosmn23", "hastaneBilgisi": "testElazig"},
+        {"tckn": "33808402042", "password": "Bahar.23", "hastaneBilgisi": "testElazig"},
+        {"tckn": "14455884436", "password": "Busra111C", "hastaneBilgisi": "testElazig"},
+        {"tckn": "33865400166", "password": "Burhan.23", "hastaneBilgisi": "testElazig"},
+        {"tckn": "33844400804", "password": "Nevin.23", "hastaneBilgisi": "testElazig"},
+        {"tckn": "18361917578", "password": "İsmail.123", "hastaneBilgisi": "testElazig"},
 
-        {"tckn": "32194456622", "password": "Muhammed23", "hastaneBilgisi": "ElazigFethisekin"},
     ]
 
     ip_infos = [
-
         {'ip': '104.239.108.202', 'port': 6437, 'user': 'iokycxec', 'password': 'e80lfjzqkbal'},
         {'ip': '104.239.108.207', 'port': 6442, 'user': 'iokycxec', 'password': 'e80lfjzqkbal'},
         {'ip': '104.239.108.33', 'port': 6268, 'user': 'iokycxec', 'password': 'e80lfjzqkbal'},
         {'ip': '216.173.84.63', 'port': 5978, 'user': 'iokycxec', 'password': 'e80lfjzqkbal'},
         {'ip': '104.239.108.91', 'port': 6326, 'user': 'iokycxec', 'password': 'e80lfjzqkbal'},
         {'ip': '104.239.108.26', 'port': 6261, 'user': 'iokycxec', 'password': 'e80lfjzqkbal'},
-
     ]
 
     lock = Lock()
