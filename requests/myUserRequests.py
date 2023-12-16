@@ -5,7 +5,6 @@ import logging
 import random
 from threading import Event, Lock
 
-# Logger ayarları
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
 logger = logging.getLogger(__name__)
 
@@ -18,8 +17,8 @@ class Authentication:
         self.headers = {}
         self.hospital_payload = hospital_payload
         self.selected_ip = selected_ip
-        self.randevu_alindi = Event()  # Her bir kullanıcı için ayrı bir Event oluşturuldu
-        self.lock = lock  # lock ekledik
+        self.randevu_alindi = Event()
+        self.lock = lock
         self.get_token()
 
     def get_token(self):
@@ -43,13 +42,13 @@ class Authentication:
             }
 
             if self.userName:
-                self.user_login_with_parent_user()
+                self.ebeveynden_cocuga_gecis()
 
-            self.randevu_ekle()
+            self.randevulari_filtrele()
         else:
             raise Exception('Token alınamadı')
 
-    def user_login_with_parent_user(self):
+    def ebeveynden_cocuga_gecis(self):
         ad_aranan = f"{self.userName}"
         yetkili_get = requests.get(self.BASE_URL + "vatandas/vatandas/yetkili-kisiler", headers=self.headers)
         yetkili_get.raise_for_status()
@@ -63,7 +62,7 @@ class Authentication:
             if yetkili_gecis_post.json()['success']:
                 return yetkili_gecis_post
 
-    def randevu_search(self):
+    def randevu_arama(self):
         payload2 = self.hospital_payload
         proxies = {
             "https": self.selected_ip
@@ -72,11 +71,11 @@ class Authentication:
         if slotListRequest.status_code == 200:
             return slotListRequest.json()
 
-    def randevu_ekle(self):
+    def randevulari_filtrele(self):
         local_available_slots = []
         while not self.randevu_alindi.is_set():
             logger.info(f"randevu aranıyor. {self.tckn} IP={self.selected_ip.split('@')[1]}")
-            slotListRequest = self.randevu_search()
+            slotListRequest = self.randevu_arama()
             if slotListRequest and slotListRequest.get('success'):
                 for hekim_slot in slotListRequest['data'][0]['hekimSlotList']:
                     for muayene_yeri_slot in hekim_slot['muayeneYeriSlotList']:
@@ -90,14 +89,15 @@ class Authentication:
                         if not self.randevu_alindi.is_set():
                             try:
                                 selected_slot = random.choice(local_available_slots)
-                                self.make_randevu(selected_slot)
+                                self.randevuTanimla(selected_slot)
                             except Exception as e:
-                                logger.error(f"Exception in make_randevu: {e}")
+                                logger.error(f"Exception in randevuTanimla: {e}")
 
-        # Tüm işlemler bittikten sonra uygun randevuları logla
+        # tüm işlemler bittikten sonra uygun randevuları logla
         #self.aktifRandevuList(self.tckn, local_available_slots)
 
     def aktifRandevuList(self, tckn, available_slots):
+        # burda tüm işlemler bittikten sonra uygun randevuları logla  randevulari_filtrele() den çağırıp görebiliriz  isteğe bağlı!
         with (self.lock):
             for selected_slot in available_slots:
                 log_message = f" USERS: {tckn}",\
@@ -106,7 +106,7 @@ class Authentication:
                               f"baslangicZamani={selected_slot['slot']['baslangicZamani']}, " \
                               f"bitisZamani={selected_slot['slot']['bitisZamani']}"
                 logger.info(log_message)
-    def make_randevu(self, slotListKalanKullanim):
+    def randevuTanimla(self, slotListKalanKullanim):
         slot = slotListKalanKullanim['slot']
         payload3 = {
             "fkSlotId": slot['id'],
@@ -134,14 +134,13 @@ class Authentication:
         elif randevuEkle.status_code == 400:
             logger.critical(f"{self.tckn} {randevuEkle.json()['errors'][0]['mesaj']} <<MHRS Tarafından Bloklandı..! {self.tckn} ***TARİH :{payload3['baslangicZamani']} fkSlotId={payload3['fkSlotId']}İstek atılan IP={self.selected_ip.split('@')[1]} ***")
 
-
 def process_user(user_info, ip_info, lock):
     payload_name = user_info.get("hastaneBilgisi")
     hospital_payload = get_hospital_payload(payload_name)
 
     selected_ip = f"http://{ip_info['user']}:{ip_info['password']}@{ip_info['ip']}:{ip_info['port']}"
     jwtToken = Authentication(user_info, hospital_payload, selected_ip, lock)
-    jwtToken.randevu_ekle()
+    jwtToken.randevulari_filtrele()
 
 if __name__ == '__main__':
     users = [
