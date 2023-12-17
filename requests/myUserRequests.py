@@ -1,3 +1,5 @@
+from datetime import datetime
+
 import requests
 from concurrent.futures import ThreadPoolExecutor
 from hastanePayload import get_hospital_payload
@@ -137,7 +139,7 @@ class Authentication:
     def send_notification(self, api_key, title, body):
         pb = pushbullet.Pushbullet(api_key)
         if hasattr(self, 'last_selected_slot'):
-            body += f" - Tarih: {self.last_selected_slot['baslangicZamani']}"
+            body += "\n"f"Randevu Bilgileri : {self.last_selected_slot['baslangicZamani']}"
         push = pb.push_note(title=title, body=body)
 
 def process_user(user_info, ip_info, lock):
@@ -150,7 +152,10 @@ def process_user(user_info, ip_info, lock):
 
     # Bildirim gönderme işlemini gerçekleştir  kapatılarak bildirim gönderme engellenir
     if jwtToken.randevu_alindi.is_set():
-        jwtToken.send_notification('o.iJ9Wip4Q5NEcu5B8CxdCsGCfwQHnCO8Y', 'RANDEVU BAŞRIYLA ALINDI', f"Kullanıcı: {user_info['tckn']}")
+        local_date = datetime.now().strftime('%H:%M:%S %d-%m-%Y')
+
+        jwtToken.send_notification('o.iJ9Wip4Q5NEcu5B8CxdCsGCfwQHnCO8Y', f'RANDEVU BAŞRIYLA ALINDI - {local_date}\n', f"Kullanıcı: {user_info['tckn']} ")
+
 
 
 if __name__ == '__main__':
@@ -162,6 +167,7 @@ if __name__ == '__main__':
         {"tckn": "33865400166", "password": "Burhan.23", "hastaneBilgisi": "testElazig"},
         {"tckn": "33844400804", "password": "Nevin.23", "hastaneBilgisi": "testElazig"},
         {"tckn": "18361917578", "password": "İsmail.123", "hastaneBilgisi": "testElazig"},
+
 
     ]
 
