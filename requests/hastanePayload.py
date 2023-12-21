@@ -148,6 +148,16 @@ payloads ={
         "ekRandevu": True,
         "randevuZamaniList": []
     },
+    "EdirneSultanMuratDevletHastanesi": {
+        "aksiyonId": 200,
+        "mhrsIlId": 22,
+        "mhrsIlceId": -1,
+        "mhrsKlinikId": 211,
+        "mhrsKurumId": 4341,
+        "tumRandevular": False,
+        "ekRandevu": True,
+        "randevuZamaniList": []
+    },
     "OsmaniyeDevletHastanesi": {
         "aksiyonId": 200,
         "mhrsIlId": 80,

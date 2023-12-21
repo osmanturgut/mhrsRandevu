@@ -96,7 +96,7 @@ class Authentication:
                                 logger.error(f"Exception in randevuTanimla: {e}")
 
         # tüm işlemler bittikten sonra uygun randevuları logla
-        #self.aktifRandevuList(self.tckn, local_available_slots)
+        self.aktifRandevuList(self.tckn, local_available_slots)
     def aktifRandevuList(self, tckn, available_slots):
         with self.lock:
             for selected_slot in available_slots:
@@ -160,24 +160,33 @@ def process_user(user_info, ip_info, lock):
 
 if __name__ == '__main__':
     users = [
-        {"tckn": "33814401824", "password": "2015Veli", "hastaneBilgisi": "testElazig"},
-        {"tckn": "33790402648", "password": "Trgtosmn23", "hastaneBilgisi": "testElazig"},
-        {"tckn": "33808402042", "password": "Bahar.23", "hastaneBilgisi": "testElazig"},
-        {"tckn": "14455884436", "password": "Busra111C", "hastaneBilgisi": "testElazig"},
-        {"tckn": "33865400166", "password": "Burhan.23", "hastaneBilgisi": "testElazig"},
-        {"tckn": "33844400804", "password": "Nevin.23", "hastaneBilgisi": "testElazig"},
-        {"tckn": "18361917578", "password": "İsmail.123", "hastaneBilgisi": "testElazig"},
+        {"tckn": "64138362812", "password": "Serhat.73", "hastaneBilgisi": "ElazigFethisekin"},
+        {"tckn": "69052199056", "password": "Serhat.73", "hastaneBilgisi": "ElazigFethisekin"},
+        {"tckn": "35192327642", "password": "Birim.73", "hastaneBilgisi": "ElazigFethisekin"},
 
 
     ]
 
+
     ip_infos = [
+        {'ip': '104.239.108.74', 'port': 6309, 'user': 'uenbwoqj', 'password': '1ix92sa4tdh1'},
+        {'ip': '104.239.108.98', 'port': 6333, 'user': 'uenbwoqj', 'password': '1ix92sa4tdh1'},
+        {'ip': '216.173.84.104', 'port': 6019, 'user': 'uenbwoqj', 'password': '1ix92sa4tdh1'},
+        {'ip': '104.239.108.241', 'port': 6476, 'user': 'uenbwoqj', 'password': '1ix92sa4tdh1'},
+        {'ip': '216.173.84.17', 'port': 5932, 'user': 'uenbwoqj', 'password': '1ix92sa4tdh1'},
+        {'ip': '104.239.108.139', 'port': 6374, 'user': 'uenbwoqj', 'password': '1ix92sa4tdh1'},
+        {'ip': '216.173.84.191', 'port': 6106, 'user': 'iokycxec', 'password': 'e80lfjzqkbal'},
+        {'ip': '216.173.84.153', 'port': 6068, 'user': 'iokycxec', 'password': 'e80lfjzqkbal'},
+        {'ip': '104.239.108.92', 'port': 6327, 'user': 'iokycxec', 'password': 'e80lfjzqkbal'},
+        {'ip': '104.239.108.209', 'port': 6444, 'user': 'iokycxec', 'password': 'e80lfjzqkbal'},
+        {'ip': '216.173.84.136', 'port': 6051, 'user': 'iokycxec', 'password': 'e80lfjzqkbal'},
         {'ip': '104.239.108.202', 'port': 6437, 'user': 'iokycxec', 'password': 'e80lfjzqkbal'},
         {'ip': '104.239.108.207', 'port': 6442, 'user': 'iokycxec', 'password': 'e80lfjzqkbal'},
         {'ip': '104.239.108.33', 'port': 6268, 'user': 'iokycxec', 'password': 'e80lfjzqkbal'},
         {'ip': '216.173.84.63', 'port': 5978, 'user': 'iokycxec', 'password': 'e80lfjzqkbal'},
         {'ip': '104.239.108.91', 'port': 6326, 'user': 'iokycxec', 'password': 'e80lfjzqkbal'},
         {'ip': '104.239.108.26', 'port': 6261, 'user': 'iokycxec', 'password': 'e80lfjzqkbal'},
+
     ]
 
     lock = Lock()
