@@ -117,13 +117,10 @@ def process_user(user_info, log_directory):
 if __name__ == '__main__':
     log_directory = '/Users/btcyz155/Desktop/mhrs_test/AccessToken/loglar'
     users = [
-        {"tckn": "33814401824", "password": "2015Veli", "hastaneBilgisi": "testElazig"},
-        {"tckn": "33790402648", "password": "Trgtosmn23", "hastaneBilgisi": "testElazig"},
-        {"tckn": "33808402042", "password": "Bahar.23", "hastaneBilgisi": "testElazig"},
-        {"tckn": "14455884436", "password": "Busra111C", "hastaneBilgisi": "testElazig"},
-        {"tckn": "33865400166", "password": "Burhan.23", "hastaneBilgisi": "testElazig"},
-        {"tckn": "33844400804", "password": "Nevin.23", "hastaneBilgisi": "testElazig"},
-        {"tckn": "18361917578", "password": "İsmail.123", "hastaneBilgisi": "testElazig"},
+        {"tckn": "33790402648", "password": "Trgtosmn23", "hastaneBilgisi": "testBingol"},
+        {"tckn": "33808402042", "password": "Bahar.23", "hastaneBilgisi": "testBingol"},
+        {"tckn": "14455884436", "password": "Busra111C", "hastaneBilgisi": "testElazig1"},
+        {"tckn": "23923732124", "password": "İbrahim23", "hastaneBilgisi": "testElazig1"},
     ]
 
     for user_info in users:

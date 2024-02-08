@@ -2,7 +2,7 @@ payloads ={
     "testBingol": {
         "aksiyonId": 200,
         "mhrsIlId": 12,
-        "mhrsKlinikId": 196,
+        "mhrsKlinikId": 157,
         "mhrsKurumId": 5116,
         "tumRandevular": False,
         "ekRandevu": True,
@@ -30,6 +30,36 @@ payloads ={
         "mhrsIlId": 23,
         "mhrsKlinikId": 211,
         "mhrsKurumId": 656194,
+        "tumRandevular": False,
+        "ekRandevu": True,
+        "randevuZamaniList": []
+    },
+    "sultanGaziFatihHasekiEAH": {
+        "aksiyonId": 200,
+        "mhrsIlId": 341,
+        "mhrsIlceId": 2055,
+        "mhrsKlinikId": 211,
+        "mhrsKurumId": 3384,
+        "tumRandevular": False,
+        "ekRandevu": True,
+        "randevuZamaniList": []
+    },
+    "esenyurtNecmiKadıogluDevhast": {
+        "aksiyonId": 200,
+        "mhrsIlId": 341,
+        "mhrsIlceId": 2053,
+        "mhrsKlinikId": 211,
+        "mhrsKurumId": 223531,
+        "tumRandevular": False,
+        "ekRandevu": True,
+        "randevuZamaniList": []
+    },
+    "bakırkoySadiKonukEAH": {
+        "aksiyonId": 200,
+        "mhrsIlId": 341,
+        "mhrsIlceId": 1166,
+        "mhrsKlinikId": 211,
+        "mhrsKurumId": 3457,
         "tumRandevular": False,
         "ekRandevu": True,
         "randevuZamaniList": []
@@ -72,6 +102,26 @@ payloads ={
         "ekRandevu": True,
         "randevuZamaniList": []
     },
+    "kadikoySuleymanYalcinDevletHastanesi": {
+        "aksiyonId": 200,
+        "mhrsIlId": 342,
+        "mhrsIlceId": 1421,
+        "mhrsKlinikId": 211,
+        "mhrsKurumId": 177296,
+        "tumRandevular": False,
+        "ekRandevu": True,
+        "randevuZamaniList": []
+    },
+    "uskudarSultanAbdulhamidhanHastanesi": {
+        "aksiyonId": 200,
+        "mhrsIlId": 342,
+        "mhrsIlceId": 1708,
+        "mhrsKlinikId": 211,
+        "mhrsKurumId": 887161,
+        "tumRandevular": False,
+        "ekRandevu": True,
+        "randevuZamaniList": []
+        },
     "CekmekoySancaktepeIlhanVarankEAH": { #İSTANBUL-(ANADOLU)-SANCAKTEPE ŞEHİT PROF.DR.İLHAN VARANK EĞİTİM VE ARAŞTIRMA HASTANESİ
         "aksiyonId": 200,
         "mhrsIlId": 342,
@@ -88,6 +138,66 @@ payloads ={
         "mhrsIlceId": 2053,
         "mhrsKlinikId": 211,
         "mhrsKurumId": 223531,
+        "tumRandevular": False,
+        "ekRandevu": True,
+        "randevuZamaniList": []
+    },
+    "sisliCemilTasciogluSehirHast": {
+        "aksiyonId": 200,
+        "mhrsIlId": 341,
+        "mhrsIlceId": 1663,
+        "mhrsKlinikId": 211,
+        "mhrsKurumId": 177300,
+        "tumRandevular": False,
+        "ekRandevu": True,
+        "randevuZamaniList": []
+    },
+    "basaksehirDevletHast": {
+        "aksiyonId": 200,
+        "mhrsIlId": 341,
+        "mhrsIlceId": 2050,
+        "mhrsKlinikId": 211,
+        "mhrsKurumId": 187596,
+        "tumRandevular": False,
+        "ekRandevu": True,
+        "randevuZamaniList": []
+    },
+    "buyukCekmeceMimarSinanDevletHast": {
+        "aksiyonId": 200,
+        "mhrsIlId": 341,
+        "mhrsIlceId": 1782,
+        "mhrsKlinikId": 211,
+        "mhrsKurumId": 642968,
+        "tumRandevular": False,
+        "ekRandevu": True,
+        "randevuZamaniList": []
+    },
+    "kucukCekmeceKanuniSultanSuleymanEAH": {
+        "aksiyonId": 200,
+        "mhrsIlId": 341,
+        "mhrsIlceId": 1823,
+        "mhrsKlinikId": 211,
+        "mhrsKurumId": 426876,
+        "tumRandevular": False,
+        "ekRandevu": True,
+        "randevuZamaniList": []
+    },
+    "gaziosmanpasaEAH": {
+        "aksiyonId": 200,
+        "mhrsIlId": 341,
+        "mhrsIlceId": 1336,
+        "mhrsKlinikId": 211,
+        "mhrsKurumId": 3407,
+        "tumRandevular": False,
+        "ekRandevu": True,
+        "randevuZamaniList": []
+    },
+    "gaziosmanpasaEAHCocukErgenPsikiyatr": {
+        "aksiyonId": 200,
+        "mhrsIlId": 341,
+        "mhrsIlceId": 1336,
+        "mhrsKlinikId": 134,
+        "mhrsKurumId": 3407,
         "tumRandevular": False,
         "ekRandevu": True,
         "randevuZamaniList": []

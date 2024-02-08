@@ -11,6 +11,7 @@ import pushbullet
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
 logger = logging.getLogger(__name__)
 
+
 class Authentication:
     def __init__(self, user_info, hospital_payload, selected_ip, lock):
         self.BASE_URL = 'https://prd.mhrs.gov.tr/api/'
@@ -35,7 +36,8 @@ class Authentication:
             "https": self.selected_ip
         }
         headers = {'Content-Type': 'application/json'}
-        response = requests.post(self.BASE_URL + "vatandas/login", headers=headers, json=payload, proxies=proxies, verify=True)
+        response = requests.post(self.BASE_URL + "vatandas/login", headers=headers, json=payload, proxies=proxies,
+                                 verify=True)
         if response.status_code == 200:
             tokens = response.json()['data']['jwt']
             self.headers = {
@@ -96,7 +98,8 @@ class Authentication:
                                 logger.error(f"Exception in randevuTanimla: {e}")
 
         # tüm işlemler bittikten sonra uygun randevuları logla
-        self.aktifRandevuList(self.tckn, local_available_slots)
+        # self.aktifRandevuList(self.tckn, local_available_slots)
+
     def aktifRandevuList(self, tckn, available_slots):
         with self.lock:
             for selected_slot in available_slots:
@@ -119,23 +122,27 @@ class Authentication:
         self.last_selected_slot = payload3
 
         logger.info(
-            f"Uygun Randevu Bulundu. {self.tckn} Kullanıcıya Ekleniyor.. ***TARİH :{payload3['baslangicZamani']} fkSlotId={payload3['fkSlotId']} IP={self.selected_ip.split('@')[1]} ***")
+            f" 'Randevu Bulundu.   Kullanıcıya Ekleniyor: {self.tckn} #'  |**| 'Randevu Tarihi :{payload3['baslangicZamani']}' 'IP={self.selected_ip.split('@')[1]}' |**|")
+
         proxies = {
             "https": self.selected_ip
         }
-        randevuEkle = requests.post(self.BASE_URL + "kurum/randevu/randevu-ekle", headers=self.headers, json=payload3, proxies=proxies, verify=True)
+        randevuEkle = requests.post(self.BASE_URL + "kurum/randevu/randevu-ekle", headers=self.headers, json=payload3,
+                                    proxies=proxies, verify=True)
 
         if randevuEkle.status_code == 200:
-            logger.info(f"RANDEVU BAŞARIYLA ALINDI  - Kullanıcı: {self.tckn}  ***TARİH :{payload3['baslangicZamani']} fkSlotId={payload3['fkSlotId']} İstek atılan IP={self.selected_ip.split('@')[1]} ***")
+            logger.info(
+                f" |RANDEVU BAŞARIYLA ALINDI|   #  Kullanıcı: {self.tckn} #   |**| 'Randevu Tarihi :{payload3['baslangicZamani']}' 'IP={self.selected_ip.split('@')[1]}' |**|")
             self.randevu_alindi.set()
 
         elif randevuEkle.status_code == 428:
-            logger.critical(f"Aktif Randevu Bulunmaktadır ..!  Kullanıcı: {self.tckn}")
+            logger.critical(
+                f"Aktif Randevu Bulunmaktadır ..!  Kullanıcı: {self.tckn}")
             self.randevu_alindi.set()
 
         elif randevuEkle.status_code == 400:
-            logger.critical(f"{self.tckn} {randevuEkle.json()['errors'][0]['mesaj']} <<MHRS Tarafından Bloklandı..! {self.tckn} ***TARİH :{payload3['baslangicZamani']} fkSlotId={payload3['fkSlotId']}İstek atılan IP={self.selected_ip.split('@')[1]} ***")
-
+            logger.critical(
+                f"{randevuEkle.json()['errors'][0]['mesaj']} <<MHRS Tarafından Bloklandı..! {self.tckn} |**|TARİH :{payload3['baslangicZamani']} fkSlotId={payload3['fkSlotId']} IP={self.selected_ip.split('@')[1]} |**|")
     def send_notification(self, api_key, title, body):
         pb = pushbullet.Pushbullet(api_key)
         if hasattr(self, 'last_selected_slot'):
@@ -151,43 +158,38 @@ def process_user(user_info, ip_info, lock):
     jwtToken.randevulari_filtrele()
 
     # Bildirim gönderme işlemini gerçekleştir  kapatılarak bildirim gönderme engellenir
-    if jwtToken.randevu_alindi.is_set():
-        local_date = datetime.now().strftime('%H:%M:%S %d-%m-%Y')
+    #if jwtToken.randevu_alindi.is_set():
+    #    local_date = datetime.now().strftime('%H:%M:%S %d-%m-%Y')
 
-        jwtToken.send_notification('o.iJ9Wip4Q5NEcu5B8CxdCsGCfwQHnCO8Y', f'RANDEVU BAŞRIYLA ALINDI - {local_date}\n', f"Kullanıcı: {user_info['tckn']} ")
+      #  jwtToken.send_notification('o.iJ9Wip4Q5NEcu5B8CxdCsGCfwQHnCO8Y', f'RANDEVU BAŞRIYLA ALINDI - {local_date}\n', f"Kullanıcı: {user_info['tckn']} ")
 
+
+# {"tckn": "14076092166", "password": "Irmak3434", "hastaneBilgisi": "gaziosmanpasaEAH"},
 
 
 if __name__ == '__main__':
     users = [
-        {"tckn": "64138362812", "password": "Serhat.73", "hastaneBilgisi": "ElazigFethisekin"},
-        {"tckn": "69052199056", "password": "Serhat.73", "hastaneBilgisi": "ElazigFethisekin"},
-        {"tckn": "35192327642", "password": "Birim.73", "hastaneBilgisi": "ElazigFethisekin"},
+        {"tckn": "53005734074", "password": "Serhat73", "hastaneBilgisi": "cizreDevletHastanesi"},
+        {"tckn": "60721476676", "password": "Serhat73", "hastaneBilgisi": "cizreDevletHastanesi"},
+        {"tckn": "32378417296", "password": "Songül.55", "hastaneBilgisi": "cizreDevletHastanesi"},
+
 
 
     ]
-
 
     ip_infos = [
-        {'ip': '104.239.108.74', 'port': 6309, 'user': 'uenbwoqj', 'password': '1ix92sa4tdh1'},
-        {'ip': '104.239.108.98', 'port': 6333, 'user': 'uenbwoqj', 'password': '1ix92sa4tdh1'},
-        {'ip': '216.173.84.104', 'port': 6019, 'user': 'uenbwoqj', 'password': '1ix92sa4tdh1'},
-        {'ip': '104.239.108.241', 'port': 6476, 'user': 'uenbwoqj', 'password': '1ix92sa4tdh1'},
-        {'ip': '216.173.84.17', 'port': 5932, 'user': 'uenbwoqj', 'password': '1ix92sa4tdh1'},
-        {'ip': '104.239.108.139', 'port': 6374, 'user': 'uenbwoqj', 'password': '1ix92sa4tdh1'},
-        {'ip': '216.173.84.191', 'port': 6106, 'user': 'iokycxec', 'password': 'e80lfjzqkbal'},
-        {'ip': '216.173.84.153', 'port': 6068, 'user': 'iokycxec', 'password': 'e80lfjzqkbal'},
-        {'ip': '104.239.108.92', 'port': 6327, 'user': 'iokycxec', 'password': 'e80lfjzqkbal'},
-        {'ip': '104.239.108.209', 'port': 6444, 'user': 'iokycxec', 'password': 'e80lfjzqkbal'},
-        {'ip': '216.173.84.136', 'port': 6051, 'user': 'iokycxec', 'password': 'e80lfjzqkbal'},
-        {'ip': '104.239.108.202', 'port': 6437, 'user': 'iokycxec', 'password': 'e80lfjzqkbal'},
-        {'ip': '104.239.108.207', 'port': 6442, 'user': 'iokycxec', 'password': 'e80lfjzqkbal'},
-        {'ip': '104.239.108.33', 'port': 6268, 'user': 'iokycxec', 'password': 'e80lfjzqkbal'},
-        {'ip': '216.173.84.63', 'port': 5978, 'user': 'iokycxec', 'password': 'e80lfjzqkbal'},
-        {'ip': '104.239.108.91', 'port': 6326, 'user': 'iokycxec', 'password': 'e80lfjzqkbal'},
-        {'ip': '104.239.108.26', 'port': 6261, 'user': 'iokycxec', 'password': 'e80lfjzqkbal'},
+        {'ip': '104.239.108.244', 'port': 6479, 'user': 'iokycxec', 'password': 'e80lfjzqkbal'},
+        {'ip': '104.239.108.124', 'port': 6359, 'user': 'iokycxec', 'password': 'e80lfjzqkbal'},
+        {'ip': '104.239.108.81', 'port': 6316, 'user': 'iokycxec', 'password': 'e80lfjzqkbal'},
+        {'ip': '216.173.84.123', 'port': 6038, 'user': 'iokycxec', 'password': 'e80lfjzqkbal'},
+        {'ip': '104.239.108.143', 'port': 6378, 'user': 'iokycxec', 'password': 'e80lfjzqkbal'},
+        {'ip': '104.239.108.5', 'port': 6240, 'user': 'iokycxec', 'password': 'e80lfjzqkbal'},
+        {'ip': '104.239.108.149', 'port': 6384, 'user': 'iokycxec', 'password': 'e80lfjzqkbal'},
+        {'ip': '104.239.108.94', 'port': 6329, 'user': 'iokycxec', 'password': 'e80lfjzqkbal'},
+        {'ip': '104.239.108.77', 'port': 6312, 'user': 'iokycxec', 'password': 'e80lfjzqkbal'},
 
     ]
+
 
     lock = Lock()
     with ThreadPoolExecutor(max_workers=len(users)) as executor:
