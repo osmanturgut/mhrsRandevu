@@ -99,6 +99,7 @@ class Authentication:
                     else:
                         self.get_logger().warning(f"Hata: Randevu {hastaneRandevuNumarasi} iptal edilemedi.")
 
+
     def iptalEt(self, randevuNumarasi):
         if self.cancelled:
             return {"success": False, "message": "Randevu zaten iptal edildi."}
@@ -117,11 +118,23 @@ def process_user(user_info, log_directory):
 if __name__ == '__main__':
     log_directory = '/Users/btcyz155/Desktop/mhrs_test/AccessToken/loglar'
     users = [
-        {"tckn": "33790402648", "password": "Trgtosmn23", "hastaneBilgisi": "testBingol"},
-        {"tckn": "33808402042", "password": "Bahar.23", "hastaneBilgisi": "testBingol"},
+        {"tckn": "33790402648", "password": "Trgtosmn23", "hastaneBilgisi": "testElazig1"},
+        {"tckn": "33808402042", "password": "Bahar.23", "hastaneBilgisi": "testElazig1"},
         {"tckn": "14455884436", "password": "Busra111C", "hastaneBilgisi": "testElazig1"},
         {"tckn": "23923732124", "password": "İbrahim23", "hastaneBilgisi": "testElazig1"},
+
     ]
 
+    """ 
+        {"tckn": "64483411944", "password": "Umut3434", "hastaneBilgisi": "sisliCemilTasciogluSehirHast"},
+        {"tckn": "16404030390", "password": "Furkan3434", "hastaneBilgisi": "gaziosmanpasaEAH"},
+        {"tckn": "15914352404", "password": "Ada123456", "hastaneBilgisi": "sisliCemilTasciogluSehirHast"},
+         {"tckn": "17232002726", "password": "Ada123456", "hastaneBilgisi": "gaziosmanpasaEAH"}, """
     for user_info in users:
         process_user(user_info, log_directory)
+        """
+                {"tckn": "64483411944", "password": "Umut3434", "hastaneBilgisi": "sisliCemilTasciogluSehirHast"},
+        {"tckn": "16404030390", "password": "Furkan3434", "hastaneBilgisi": "gaziosmanpasaEAH"},
+        {"tckn": "15914352404", "password": "Ada123456", "hastaneBilgisi": "sisliCemilTasciogluSehirHast"},
+        {"tckn": "17232002726", "password": "Ada123456", "hastaneBilgisi": "gaziosmanpasaEAH"},
+        """
