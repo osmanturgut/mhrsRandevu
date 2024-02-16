@@ -21,7 +21,7 @@ def run_scheduled(start_time_str, end_time_str, kacSaniyedeBir=180, kacSaniyeCal
 
 if __name__ == "__main__":
     # Başlangıç ve bitiş tarihlerini manuel olarak ayarlayın
-    start_time_input = "2024-02-08 09:23:00"
-    end_time_input = "2024-02-08 20:23:00"
+    start_time_input = "2024-02-15 09:50:00"
+    end_time_input = "2024-02-20 20:23:00"
 
     run_scheduled(start_time_input, end_time_input)

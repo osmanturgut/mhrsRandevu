@@ -1,85 +1,63 @@
-from datetime import datetime
-
-import requests
-from concurrent.futures import ThreadPoolExecutor
-from hastanePayload import get_hospital_payload
+import aiohttp
 import logging
 import random
-from threading import Event, Lock
-import pushbullet
+from hastanePayload import get_hospital_payload
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
 logger = logging.getLogger(__name__)
 
-
 class Authentication:
-    def __init__(self, user_info, hospital_payload, selected_ip, lock):
+    def __init__(self, session, user_info, hospital_payload, selected_ip):
         self.BASE_URL = 'https://prd.mhrs.gov.tr/api/'
         self.tckn = user_info["tckn"]
         self.userName = user_info.get("userName", "")
         self.password = user_info["password"]
-        self.headers = {}
+        self.session = session
         self.hospital_payload = hospital_payload
         self.selected_ip = selected_ip
-        self.randevu_alindi = Event()
-        self.lock = lock
-        self.get_token()
+        self.headers = {}
+        self.last_selected_slot = None
+        self.randevu_alindi = False
 
-    def get_token(self):
+    async def get_token(self):
         payload = {
             "kullaniciAdi": self.tckn,
             "parola": self.password,
             "islemKanali": "VATANDAS_WEB",
             "girisTipi": "PAROLA",
         }
-        proxies = {
-            "https": self.selected_ip
-        }
-        headers = {'Content-Type': 'application/json'}
-        response = requests.post(self.BASE_URL + "vatandas/login", headers=headers, json=payload, proxies=proxies,
-                                 verify=True)
-        if response.status_code == 200:
-            tokens = response.json()['data']['jwt']
-            self.headers = {
-                'Content-Type': 'application/json',
-                'Authorization': f'Bearer {tokens}'
-            }
+        async with self.session.post(self.BASE_URL + "vatandas/login", json=payload, verify_ssl=False, proxy=self.selected_ip) as response:
+            if response.status == 200:
+                data = await response.json()
+                tokens = data['data']['jwt']
+                self.headers = {'Content-Type': 'application/json', 'Authorization': f'Bearer {tokens}'}
+                if self.userName:
+                    await self.ebeveynden_cocuga_gecis()
 
-            if self.userName:
-                self.ebeveynden_cocuga_gecis()
+                await self.randevulari_filtrele()
+            else:
+                raise Exception('Token alınamadı')
 
-            self.randevulari_filtrele()
-        else:
-            raise Exception('Token alınamadı')
-
-    def ebeveynden_cocuga_gecis(self):
+    async def ebeveynden_cocuga_gecis(self):
         ad_aranan = f"{self.userName}"
-        yetkili_get = requests.get(self.BASE_URL + "vatandas/vatandas/yetkili-kisiler", headers=self.headers)
-        yetkili_get.raise_for_status()
-        bulunan_veri = next((veri for veri in yetkili_get.json()["data"] if veri["ad"].upper() == ad_aranan.upper()), None)
+        async with self.session.get(self.BASE_URL + "vatandas/vatandas/yetkili-kisiler", headers=self.headers, verify_ssl=False, proxy=self.selected_ip) as response:
+            data = await response.json()
+            bulunan_veri = next((veri for veri in data["data"] if veri["ad"].upper() == ad_aranan.upper()), None)
+            if bulunan_veri:
+                uuid_degeri = bulunan_veri["uuid"]
+                yetkili = {"uuid": f"{uuid_degeri}", "islemKanali": "VATANDAS_WEB"}
+                await self.session.post(self.BASE_URL + "vatandas/vatandas/yetkili-hesaba-gec", headers=self.headers, json=yetkili, verify_ssl=False, proxy=self.selected_ip)
 
-        if bulunan_veri:
-            uuid_degeri = bulunan_veri["uuid"]
-            yetkili = {"uuid": f"{uuid_degeri}", "islemKanali": "VATANDAS_WEB"}
-            yetkili_gecis_post = requests.post(self.BASE_URL + "vatandas/vatandas/yetkili-hesaba-gec", headers=self.headers, json=yetkili)
+    async def randevu_arama(self):
+        async with self.session.post(self.BASE_URL + "kurum-rss/randevu/slot-sorgulama/slot", headers=self.headers, json=self.hospital_payload, verify_ssl=False, proxy=self.selected_ip) as response:
+            if response.status == 200:
+                return await response.json()
 
-            if yetkili_gecis_post.json()['success']:
-                return yetkili_gecis_post
-
-    def randevu_arama(self):
-        payload2 = self.hospital_payload
-        proxies = {
-            "https": self.selected_ip
-        }
-        slotListRequest = requests.post(self.BASE_URL + "kurum-rss/randevu/slot-sorgulama/slot", headers=self.headers, json=payload2, proxies=proxies, verify=True)
-        if slotListRequest.status_code == 200:
-            return slotListRequest.json()
-
-    def randevulari_filtrele(self):
+    async def randevulari_filtrele(self):
         local_available_slots = []
-        while not self.randevu_alindi.is_set():
+        while not self.randevu_alindi:
             logger.info(f"randevu aranıyor. {self.tckn} IP={self.selected_ip.split('@')[1]}")
-            slotListRequest = self.randevu_arama()
+            slotListRequest = await self.randevu_arama()
             if slotListRequest and slotListRequest.get('success'):
                 for hekim_slot in slotListRequest['data'][0]['hekimSlotList']:
                     for muayene_yeri_slot in hekim_slot['muayeneYeriSlotList']:
@@ -89,28 +67,13 @@ class Authentication:
                                     local_available_slots.append(slotListKalanKullanim)
 
                 if local_available_slots:
-                    with self.lock:
-                        if not self.randevu_alindi.is_set():
-                            try:
-                                selected_slot = random.choice(local_available_slots)
-                                self.randevuTanimla(selected_slot)
-                            except Exception as e:
-                                logger.error(f"Exception in randevuTanimla: {e}")
+                    try:
+                        selected_slot = random.choice(local_available_slots)
+                        await self.randevuTanimla(selected_slot)
+                    except Exception as e:
+                        logger.error(f"Exception in randevuTanimla: {e}")
 
-        # tüm işlemler bittikten sonra uygun randevuları logla
-        # self.aktifRandevuList(self.tckn, local_available_slots)
-
-    def aktifRandevuList(self, tckn, available_slots):
-        with self.lock:
-            for selected_slot in available_slots:
-                log_message = f" USERS: {tckn}",\
-                              f"id={selected_slot['slot']['id']}, " \
-                              f"fkCetvelId={selected_slot['slot']['fkCetvelId']}, " \
-                              f"baslangicZamani={selected_slot['slot']['baslangicZamani']}, " \
-                              f"bitisZamani={selected_slot['slot']['bitisZamani']}"
-                logger.info(log_message)
-
-    def randevuTanimla(self, slotListKalanKullanim):
+    async def randevuTanimla(self, slotListKalanKullanim):
         slot = slotListKalanKullanim['slot']
         payload3 = {
             "fkSlotId": slot['id'],
@@ -120,63 +83,41 @@ class Authentication:
             "bitisZamani": slot['bitisZamani'],
         }
         self.last_selected_slot = payload3
-
         logger.info(
             f" 'Randevu Bulundu.   Kullanıcıya Ekleniyor: {self.tckn} #'  |**| 'Randevu Tarihi :{payload3['baslangicZamani']}' 'IP={self.selected_ip.split('@')[1]}' |**|")
 
-        proxies = {
-            "https": self.selected_ip
-        }
-        randevuEkle = requests.post(self.BASE_URL + "kurum/randevu/randevu-ekle", headers=self.headers, json=payload3,
-                                    proxies=proxies, verify=True)
+        async with self.session.post(self.BASE_URL + "kurum/randevu/randevu-ekle", headers=self.headers, json=payload3, verify_ssl=False, proxy=self.selected_ip) as randevuEkle:
+            if randevuEkle.status == 200:
+                logger.info(
+                    f" |RANDEVU BAŞARIYLA ALINDI|   #  Kullanıcı: {self.tckn} #   |**| 'Randevu Tarihi :{payload3['baslangicZamani']}' 'IP={self.selected_ip.split('@')[1]}' |**|")
+                self.randevu_alindi = True
+            elif randevuEkle.status == 428:
+                logger.critical(
+                    f"Aktif Randevu Bulunmaktadır ..!  Kullanıcı: {self.tckn}")
+                self.randevu_alindi = True
+            elif randevuEkle.status == 400:
+                error_message = await randevuEkle.json()
+                logger.critical(
+                    f"{error_message['errors'][0]['mesaj']} <<MHRS Tarafından Bloklandı..! {self.tckn} |**|TARİH :{payload3['baslangicZamani']} fkSlotId={payload3['fkSlotId']} IP={self.selected_ip.split('@')[1]} |**|")
 
-        if randevuEkle.status_code == 200:
-            logger.info(
-                f" |RANDEVU BAŞARIYLA ALINDI|   #  Kullanıcı: {self.tckn} #   |**| 'Randevu Tarihi :{payload3['baslangicZamani']}' 'IP={self.selected_ip.split('@')[1]}' |**|")
-            self.randevu_alindi.set()
-
-        elif randevuEkle.status_code == 428:
-            logger.critical(
-                f"Aktif Randevu Bulunmaktadır ..!  Kullanıcı: {self.tckn}")
-            self.randevu_alindi.set()
-
-        elif randevuEkle.status_code == 400:
-            logger.critical(
-                f"{randevuEkle.json()['errors'][0]['mesaj']} <<MHRS Tarafından Bloklandı..! {self.tckn} |**|TARİH :{payload3['baslangicZamani']} fkSlotId={payload3['fkSlotId']} IP={self.selected_ip.split('@')[1]} |**|")
-    def send_notification(self, api_key, title, body):
-        pb = pushbullet.Pushbullet(api_key)
-        if hasattr(self, 'last_selected_slot'):
-            body += "\n"f"Randevu Bilgileri : {self.last_selected_slot['baslangicZamani']}"
-        push = pb.push_note(title=title, body=body)
-
-def process_user(user_info, ip_info, lock):
-    payload_name = user_info.get("hastaneBilgisi")
-    hospital_payload = get_hospital_payload(payload_name)
-
-    selected_ip = f"http://{ip_info['user']}:{ip_info['password']}@{ip_info['ip']}:{ip_info['port']}"
-    jwtToken = Authentication(user_info, hospital_payload, selected_ip, lock)
-    jwtToken.randevulari_filtrele()
-
-    # Bildirim gönderme işlemini gerçekleştir  kapatılarak bildirim gönderme engellenir
-    #if jwtToken.randevu_alindi.is_set():
-    #    local_date = datetime.now().strftime('%H:%M:%S %d-%m-%Y')
-
-      #  jwtToken.send_notification('o.iJ9Wip4Q5NEcu5B8CxdCsGCfwQHnCO8Y', f'RANDEVU BAŞRIYLA ALINDI - {local_date}\n', f"Kullanıcı: {user_info['tckn']} ")
-
-
-# {"tckn": "14076092166", "password": "Irmak3434", "hastaneBilgisi": "gaziosmanpasaEAH"},
-
+async def process_user(session, user_info, ip_info):
+    try:
+        payload_name = user_info.get("hastaneBilgisi")
+        hospital_payload = get_hospital_payload(payload_name)
+        selected_ip = f"http://{ip_info['user']}:{ip_info['password']}@{ip_info['ip']}:{ip_info['port']}"
+        async with aiohttp.ClientSession() as session:
+            jwtToken = Authentication(session, user_info, hospital_payload, selected_ip)
+            await jwtToken.get_token()
+    except Exception as e:
+        logger.error(f"Hata oluştu: {e}. Kullanıcı işlenemedi: {user_info['tckn']}")
 
 if __name__ == '__main__':
     users = [
-        {"tckn": "53005734074", "password": "Serhat73", "hastaneBilgisi": "cizreDevletHastanesi"},
-        {"tckn": "60721476676", "password": "Serhat73", "hastaneBilgisi": "cizreDevletHastanesi"},
-        {"tckn": "32378417296", "password": "Songül.55", "hastaneBilgisi": "cizreDevletHastanesi"},
-
-
-
+        {"tckn": "64483411944", "password": "Umut3434", "hastaneBilgisi": "sisliCemilTasciogluSehirHast"},
+        {"tckn": "16404030390", "password": "Furkan3434", "hastaneBilgisi": "gaziosmanpasaEAH"},
+        {"tckn": "15914352404", "password": "Ada123456", "hastaneBilgisi": "sisliCemilTasciogluSehirHast"},
+        {"tckn": "17232002726", "password": "Ada123456", "hastaneBilgisi": "gaziosmanpasaEAH"},
     ]
-
     ip_infos = [
         {'ip': '104.239.108.244', 'port': 6479, 'user': 'iokycxec', 'password': 'e80lfjzqkbal'},
         {'ip': '104.239.108.124', 'port': 6359, 'user': 'iokycxec', 'password': 'e80lfjzqkbal'},
@@ -187,10 +128,12 @@ if __name__ == '__main__':
         {'ip': '104.239.108.149', 'port': 6384, 'user': 'iokycxec', 'password': 'e80lfjzqkbal'},
         {'ip': '104.239.108.94', 'port': 6329, 'user': 'iokycxec', 'password': 'e80lfjzqkbal'},
         {'ip': '104.239.108.77', 'port': 6312, 'user': 'iokycxec', 'password': 'e80lfjzqkbal'},
-
     ]
 
+    import asyncio
+    async def main():
+        async with aiohttp.ClientSession() as session:
+            tasks = [process_user(session, user, ip_info) for user, ip_info in zip(users, ip_infos)]
+            await asyncio.gather(*tasks)
 
-    lock = Lock()
-    with ThreadPoolExecutor(max_workers=len(users)) as executor:
-        executor.map(process_user, users, ip_infos, [lock] * len(users))
+    asyncio.run(main())
