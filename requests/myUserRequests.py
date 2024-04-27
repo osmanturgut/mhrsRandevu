@@ -1,9 +1,12 @@
-import aiohttp
-import logging
-import random
+# myUserRequests.py
+
 import asyncio
+import aiohttp
 from telegram import Bot
 from hastanePayload import get_hospital_payload
+import logging
+import random
+
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
 logger = logging.getLogger(__name__)
@@ -14,7 +17,7 @@ class Authentication:
         self.tckn = user_info["tckn"]
         self.userName = user_info.get("userName", "")
         self.password = user_info["password"]
-        self.hospital = user_info["hastaneBilgisi"]  # Eklenen satır
+        self.hospital = user_info["hastaneBilgisi"]
         self.session = session
         self.hospital_payload = hospital_payload
         self.selected_ip = selected_ip
@@ -137,33 +140,7 @@ async def process_user(session, user_info, primary_hospital_payload, secondary_h
     else:
         await auth.process_notifications()
 
-async def main():
-    users = [
-
-        {"tckn": "36712688472", "password": "Ada123456", "hastaneBilgisi": "sisliCemilTasciogluSehirHast"},
-        {"tckn": "23714784400", "password": "Ada123456", "hastaneBilgisi": "sisliCemilTasciogluSehirHast"},
-        {"tckn": "37396637510", "password": "Ada123456", "hastaneBilgisi": "sisliCemilTasciogluSehirHast"},
-
-    ]
-    ip_infos = [
-        {'ip': '104.239.108.19', 'port': 6254, 'user': 'AxKN3fd4', 'password': 'AxKN3fd4'},
-        {'ip': '104.239.108.94', 'port': 6329, 'user': 'AxKN3fd4', 'password': 'AxKN3fd4'},
-        {'ip': '104.239.108.149', 'port': 6384, 'user': 'AxKN3fd4', 'password': 'AxKN3fd4'},
-        {'ip': '104.239.108.5', 'port': 6240, 'user': 'AxKN3fd4', 'password': 'AxKN3fd4'},
-        {'ip': '104.239.108.143', 'port': 6378, 'user': 'AxKN3fd4', 'password': 'AxKN3fd4'},
-        {'ip': '104.239.108.92', 'port': 6327, 'user': 'AxKN3fd4', 'password': 'AxKN3fd4'},
-        {'ip': '104.239.108.202', 'port': 6437, 'user': 'AxKN3fd4', 'password': 'AxKN3fd4'},
-        {'ip': '104.239.108.207', 'port': 6442, 'user': 'AxKN3fd4', 'password': 'AxKN3fd4'},
-        {'ip': '104.239.108.33', 'port': 6268, 'user': 'AxKN3fd4', 'password': 'AxKN3fd4'},
-        {'ip': '104.239.108.91', 'port': 6326, 'user': 'AxKN3fd4', 'password': 'AxKN3fd4'},
-        {'ip': '104.239.108.26', 'port': 6261, 'user': 'AxKN3fd4', 'password': 'AxKN3fd4'},
-        {'ip': '104.239.108.244', 'port': 6479, 'user': 'AxKN3fd4', 'password': 'AxKN3fd4'},
-
-    ]
-
-
-
-
+async def main(users, ip_infos):
     primary_hospital_payloads = [get_hospital_payload(user["hastaneBilgisi"]) for user in users]
     secondary_hospital_payloads = [get_hospital_payload(user.get("ikinciHastaneBilgisi")) for user in users]
 
