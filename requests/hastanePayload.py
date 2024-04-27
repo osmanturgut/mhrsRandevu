@@ -17,6 +17,17 @@ payloads ={
         "ekRandevu": True,
         "randevuZamaniList": [],
     },
+    "kadindogum": {
+        "aksiyonId": 200,
+        "mhrsHekimId": 83833,
+        "mhrsIlId": 23,
+        "mhrsKlinikId": 161,
+        "mhrsKurumId": 656194,
+        "muayeneYeriId": 7313571,
+        "tumRandevular": False,
+        "ekRandevu": True,
+        "randevuZamaniList": [],
+    },
     "testElazig1": {
         "aksiyonId": 200,
         "mhrsIlId": 23,
@@ -60,6 +71,16 @@ payloads ={
         "mhrsIlceId": 1166,
         "mhrsKlinikId": 211,
         "mhrsKurumId": 3457,
+        "tumRandevular": False,
+        "ekRandevu": True,
+        "randevuZamaniList": []
+    },
+    "bagcilarEAH": {
+        "aksiyonId": 200,
+        "mhrsIlId": 341,
+        "mhrsIlceId": 2004,
+        "mhrsKlinikId": 211,
+        "mhrsKurumId": 183567,
         "tumRandevular": False,
         "ekRandevu": True,
         "randevuZamaniList": []
@@ -142,6 +163,16 @@ payloads ={
         "ekRandevu": True,
         "randevuZamaniList": []
     },
+    "sultangaziHasekiEAH": {
+        "aksiyonId": 200,
+        "mhrsIlId": 341,
+        "mhrsIlceId": 2055,
+        "mhrsKlinikId": 211,
+        "mhrsKurumId": 5796,
+        "tumRandevular": False,
+        "ekRandevu": True,
+        "randevuZamaniList": []
+    },
     "sisliCemilTasciogluSehirHast": {
         "aksiyonId": 200,
         "mhrsIlId": 341,
@@ -152,12 +183,53 @@ payloads ={
         "ekRandevu": True,
         "randevuZamaniList": []
     },
+    "sisliCemilTasciogluSehirHastEriskinHasta": {
+        "aksiyonId": 200,
+        "mhrsIlId": 341,
+        "mhrsIlceId": 1663,
+        "mhrsKlinikId": 210,
+        "mhrsKurumId": 177300,
+        "tumRandevular": False,
+        "ekRandevu": True,
+        "randevuZamaniList": []
+    },
+    "gaziosmanpasaEAHEriskinHasta": {
+        "aksiyonId": 200,
+        "mhrsIlId": 341,
+        "mhrsIlceId": 1336,
+        "mhrsKlinikId": 210,
+        "mhrsKurumId": 3407,
+        "tumRandevular": False,
+        "ekRandevu": True,
+        "randevuZamaniList": []
+    },
     "basaksehirDevletHast": {
         "aksiyonId": 200,
         "mhrsIlId": 341,
         "mhrsIlceId": 2050,
         "mhrsKlinikId": 211,
         "mhrsKurumId": 187596,
+        "tumRandevular": False,
+        "ekRandevu": True,
+        "randevuZamaniList": []
+    },
+    "basaksehirCamveSakuraSehirHast": {
+        "aksiyonId": 200,
+        "mhrsIlId": 341,
+        "mhrsIlceId": 2050,
+        "mhrsKlinikId": 211,
+        "mhrsKurumId": 27911,
+        "tumRandevular": False,
+        "ekRandevu": True,
+        "randevuZamaniList": []
+    },
+    "basaksehirCamveSakuraSehirHastRomatoloji": {
+        "aksiyonId": 200,
+        "mhrsIlId": 341,
+        "mhrsIlceId": 2050,
+        "mhrsKlinikId": 180,
+        "mhrsKurumId": 27911,
+        "mhrsHekimId": 134798,
         "tumRandevular": False,
         "ekRandevu": True,
         "randevuZamaniList": []
@@ -182,6 +254,16 @@ payloads ={
         "ekRandevu": True,
         "randevuZamaniList": []
     },
+    "avcilarMuratKolukDevletHastanesi": {
+        "aksiyonId": 200,
+        "mhrsIlId": 341,
+        "mhrsIlceId": 2003,
+        "mhrsKlinikId": 211,
+        "mhrsKurumId": 793110,
+        "tumRandevular": False,
+        "ekRandevu": True,
+        "randevuZamaniList": []
+    },
     "gaziosmanpasaEAH": {
         "aksiyonId": 200,
         "mhrsIlId": 341,
@@ -198,6 +280,16 @@ payloads ={
         "mhrsIlceId": 1336,
         "mhrsKlinikId": 134,
         "mhrsKurumId": 3407,
+        "tumRandevular": False,
+        "ekRandevu": True,
+        "randevuZamaniList": []
+    },
+    "tekirdagCerkezkoy": {
+        "aksiyonId": 200,
+        "mhrsIlId": 341,
+        "mhrsIlceId": 1250,
+        "mhrsKlinikId": 211,
+        "mhrsKurumId": 14617,
         "tumRandevular": False,
         "ekRandevu": True,
         "randevuZamaniList": []
@@ -284,6 +376,26 @@ payloads ={
         "mhrsIlceId": -1,
         "mhrsKlinikId": 211,
         "mhrsKurumId": 6275,
+        "tumRandevular": False,
+        "ekRandevu": True,
+        "randevuZamaniList": []
+    },
+    "goztepeSuleymanYalcin": {
+        "aksiyonId": 200,
+        "mhrsIlId": 342,
+        "mhrsIlceId": -1,
+        "mhrsKlinikId": 136,
+        "mhrsKurumId": 177296,
+        "tumRandevular": False,
+        "ekRandevu": True,
+        "randevuZamaniList": []
+    },
+    "sultanAbdulhamithanOncelik": {
+        "aksiyonId": 200,
+        "mhrsIlId": 342,
+        "mhrsIlceId": -1,
+        "mhrsKlinikId": 136,
+        "mhrsKurumId": 887161,
         "tumRandevular": False,
         "ekRandevu": True,
         "randevuZamaniList": []

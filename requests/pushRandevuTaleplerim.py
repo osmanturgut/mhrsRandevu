@@ -136,17 +136,31 @@ async def process_user(session, user_info, primary_hospital_payload, secondary_h
         logger.error(f"Hata oluştu: {e}. Kullanıcı işlenemedi: {user_info['tckn']}")
     else:
         await auth.process_notifications()
+        """
+        {"tckn": "70981195392", "password": "Yavuz2056552", "hastaneBilgisi": "basaksehirCamveSakuraSehirHast"},# 21 nisan
+        #{"tckn": "55834690392", "password": "Edatuana.1", "hastaneBilgisi": "basaksehirCamveSakuraSehirHast"},# 21 nisan
+        {"tckn": "76681005238", "password": "5354Hilal", "hastaneBilgisi": "basaksehirCamveSakuraSehirHast"},# 21 nisan
+        {"tckn": "42038152566", "password": "5354Zeynep", "hastaneBilgisi": "basaksehirCamveSakuraSehirHast"}, # 21 nisan
+        {"tckn": "60034576124", "password": "Esraaras21", "hastaneBilgisi": "gaziosmanpasaEAH"},
+        {"tckn": "27311672740", "password": "Ecmel061", "hastaneBilgisi": "sisliCemilTasciogluSehirHast"},
+        {"tckn": "36712688472", "password": "Ada123456", "hastaneBilgisi": "sisliCemilTasciogluSehirHast"},
+        {"tckn": "17228308764", "password": "Ucel1234", "hastaneBilgisi": "sisliCemilTasciogluSehirHast"},
 
+        """
 async def main():
     users = [
-
-        {"tckn": "36712688472", "password": "Ada123456", "hastaneBilgisi": "sisliCemilTasciogluSehirHast"},
-        {"tckn": "23714784400", "password": "Ada123456", "hastaneBilgisi": "sisliCemilTasciogluSehirHast"},
-        {"tckn": "37396637510", "password": "Ada123456", "hastaneBilgisi": "sisliCemilTasciogluSehirHast"},
+                {"tckn": "69715177148", "password": "Serhat73", "hastaneBilgisi": "sirnakDevletHastanesi"},
+                {"tckn": "25478648318", "password": "Serhat73", "hastaneBilgisi": "sirnakDevletHastanesi"},
+                {"tckn": "60016500154", "password": "Serhat73", "hastaneBilgisi": "sirnakDevletHastanesi"},
+                {"tckn": "27070399322", "password": "Songül.55", "hastaneBilgisi": "sirnakDevletHastanesi"},
+                {"tckn": "72043099228", "password": "Songül.55", "hastaneBilgisi": "sirnakDevletHastanesi"},
+                {"tckn": "73855039044", "password": "Songül.55", "hastaneBilgisi": "sirnakDevletHastanesi"},
+                {"tckn": "27070399322", "password": "Songül.55", "hastaneBilgisi": "sirnakDevletHastanesi"},
+                {"tckn": "67789241352", "password": "Songül.55", "hastaneBilgisi": "sirnakDevletHastanesi"},
+                {"tckn": "62596414210", "password": "Songül.55", "hastaneBilgisi": "sirnakDevletHastanesi"},
 
     ]
     ip_infos = [
-        {'ip': '104.239.108.19', 'port': 6254, 'user': 'AxKN3fd4', 'password': 'AxKN3fd4'},
         {'ip': '104.239.108.94', 'port': 6329, 'user': 'AxKN3fd4', 'password': 'AxKN3fd4'},
         {'ip': '104.239.108.149', 'port': 6384, 'user': 'AxKN3fd4', 'password': 'AxKN3fd4'},
         {'ip': '104.239.108.5', 'port': 6240, 'user': 'AxKN3fd4', 'password': 'AxKN3fd4'},
@@ -160,9 +174,6 @@ async def main():
         {'ip': '104.239.108.244', 'port': 6479, 'user': 'AxKN3fd4', 'password': 'AxKN3fd4'},
 
     ]
-
-
-
 
     primary_hospital_payloads = [get_hospital_payload(user["hastaneBilgisi"]) for user in users]
     secondary_hospital_payloads = [get_hospital_payload(user.get("ikinciHastaneBilgisi")) for user in users]

@@ -118,23 +118,26 @@ def process_user(user_info, log_directory):
 if __name__ == '__main__':
     log_directory = '/Users/btcyz155/Desktop/mhrs_test/AccessToken/loglar'
     users = [
+
         {"tckn": "33790402648", "password": "Trgtosmn23", "hastaneBilgisi": "testElazig1"},
         {"tckn": "33808402042", "password": "Bahar.23", "hastaneBilgisi": "testElazig1"},
         {"tckn": "14455884436", "password": "Busra111C", "hastaneBilgisi": "testElazig1"},
-        {"tckn": "23923732124", "password": "İbrahim23", "hastaneBilgisi": "testElazig1"},
-
     ]
+    """
+        {'ip': '104.239.108.19', 'port': 6254, 'user': 'AxKN3fd4', 'password': 'AxKN3fd4'},
+        {'ip': '104.239.108.94', 'port': 6329, 'user': 'AxKN3fd4', 'password': 'AxKN3fd4'},
+        {'ip': '104.239.108.149', 'port': 6384, 'user': 'AxKN3fd4', 'password': 'AxKN3fd4'},
+        {'ip': '104.239.108.5', 'port': 6240, 'user': 'AxKN3fd4', 'password': 'AxKN3fd4'},
+        {'ip': '104.239.108.143', 'port': 6378, 'user': 'AxKN3fd4', 'password': 'AxKN3fd4'},
+        {'ip': '104.239.108.92', 'port': 6327, 'user': 'AxKN3fd4', 'password': 'AxKN3fd4'},
+        {'ip': '104.239.108.202', 'port': 6437, 'user': 'AxKN3fd4', 'password': 'AxKN3fd4'},
+        {'ip': '104.239.108.207', 'port': 6442, 'user': 'AxKN3fd4', 'password': 'AxKN3fd4'},
+        {'ip': '104.239.108.33', 'port': 6268, 'user': 'AxKN3fd4', 'password': 'AxKN3fd4'},
+        {'ip': '104.239.108.91', 'port': 6326, 'user': 'AxKN3fd4', 'password': 'AxKN3fd4'},
+        {'ip': '104.239.108.26', 'port': 6261, 'user': 'AxKN3fd4', 'password': 'AxKN3fd4'},
+        {'ip': '104.239.108.244', 'port': 6479, 'user': 'AxKN3fd4', 'password': 'AxKN3fd4'},
+        {'ip': '104.239.108.124', 'port': 6359, 'user': 'AxKN3fd4', 'password': 'AxKN3fd4'},
+    """
 
-    """ 
-        {"tckn": "64483411944", "password": "Umut3434", "hastaneBilgisi": "sisliCemilTasciogluSehirHast"},
-        {"tckn": "16404030390", "password": "Furkan3434", "hastaneBilgisi": "gaziosmanpasaEAH"},
-        {"tckn": "15914352404", "password": "Ada123456", "hastaneBilgisi": "sisliCemilTasciogluSehirHast"},
-         {"tckn": "17232002726", "password": "Ada123456", "hastaneBilgisi": "gaziosmanpasaEAH"}, """
     for user_info in users:
         process_user(user_info, log_directory)
-        """
-                {"tckn": "64483411944", "password": "Umut3434", "hastaneBilgisi": "sisliCemilTasciogluSehirHast"},
-        {"tckn": "16404030390", "password": "Furkan3434", "hastaneBilgisi": "gaziosmanpasaEAH"},
-        {"tckn": "15914352404", "password": "Ada123456", "hastaneBilgisi": "sisliCemilTasciogluSehirHast"},
-        {"tckn": "17232002726", "password": "Ada123456", "hastaneBilgisi": "gaziosmanpasaEAH"},
-        """
