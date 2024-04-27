@@ -2,7 +2,7 @@ import time
 import subprocess
 from datetime import datetime, time as dtime, timedelta
 def run_main():
-    subprocess.run(["python3", "/Users/btcyz155/Desktop/projects/kisisel/mhrsRandevu/requests/myUserRequests.py"])
+    subprocess.run(["python3", "/Users/btcyz155/Desktop/projects/kisisel/mhrsRandevu/requests/users.py"])
 def run_scheduled():
     start_time = dtime(hour=00, minute=27)
     end_time = dtime(hour=10, minute=2)

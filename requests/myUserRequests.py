@@ -111,7 +111,9 @@ class Authentication:
                 error_message = await randevuEkle.json()
                 logger.critical(
                     f"{error_message['errors'][0]['mesaj']} <<MHRS Tarafından Bloklandı..! {self.tckn} |**|TARİH :{payload3['baslangicZamani']} fkSlotId={payload3['fkSlotId']} IP={self.selected_ip.split('@')[1]} |**|")
-
+            else:
+                logger.error(
+                    f"Bilinmeyen bir hata kodu döndü: {randevuEkle.status}. Hata mesajı: {await randevuEkle.text()}")
     async def send_telegram_notification(self, messages):
         bot_token = '6939284616:AAE4sBlGfQ4pG197XG35y5wm-4dE3-Xe-ks'
         chat_id = '5843254010'
@@ -150,6 +152,3 @@ async def main(users, ip_infos):
             task = asyncio.create_task(process_user(session, user, primary_payload, secondary_payload, ip_info))
             tasks.append(task)
         await asyncio.gather(*tasks)
-
-if __name__ == "__main__":
-    asyncio.run(main())
