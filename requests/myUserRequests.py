@@ -56,9 +56,13 @@ class Authentication:
                 await self.session.post(self.BASE_URL + "vatandas/vatandas/yetkili-hesaba-gec", headers=self.headers, json=yetkili, verify_ssl=False, proxy=self.selected_ip)
 
     async def randevu_arama(self):
-        async with self.session.post(self.BASE_URL + "kurum-rss/randevu/slot-sorgulama/slot", headers=self.headers, json=self.hospital_payload, verify_ssl=False, proxy=self.selected_ip) as response:
+        async with self.session.post(self.BASE_URL + "kurum-rss/randevu/slot-sorgulama/slot", headers=self.headers,
+                                     json=self.hospital_payload, verify_ssl=False, proxy=self.selected_ip) as response:
             if response.status == 200:
-                return await response.json()
+                data = await response.json()
+                if data:  # Eğer data boş değilse, yani randevu bulunmuşsa
+                    logging.info(f"Randevu bulundu: {data}")
+                return data
 
     async def randevulari_filtrele(self):
         local_available_slots = []
@@ -100,8 +104,7 @@ class Authentication:
             if randevuEkle.status == 200:
                 logger.info(
                     f" |RANDEVU BAŞARIYLA ALINDI|   #  Kullanıcı: {self.tckn} #   |**| 'Randevu Tarihi :{payload3['baslangicZamani']}' 'IP={self.selected_ip.split('@')[1]}' |**|")
-                self.notification_queue.append(f"|RANDEVU BAŞARIYLA ALINDI| \nKullanıcı : {self.tckn}\nAlınan Hastane: {self.hospital} \nRandevu Tarihi: {payload3['baslangicZamani']}")  # Değiştirilen satır
-
+                self.notification_queue.append( f"|RANDEVU BAŞARIYLA ALINDI| \nKullanıcı : {self.tckn}\nAlınan Hastane: {self.hospital} \nRandevu Tarihi: {payload3['baslangicZamani']} \nCihaz: {self.selected_ip.split('@')[1]}")
                 self.randevu_alindi = True
             elif randevuEkle.status == 428:
                 logger.critical(

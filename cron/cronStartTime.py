@@ -2,10 +2,10 @@ import time
 import subprocess
 from datetime import datetime, time as dtime, timedelta
 def run_main():
-    subprocess.run(["python3", "/Users/btcyz155/Desktop/projects/kisisel/mhrsRandevu/requests/users.py"])
+    subprocess.run(["python3", "/Users/btcyz155/Desktop/projects/kisisel/mhrsRandevu/requests/users2.py"])
 def run_scheduled():
-    start_time = dtime(hour=00, minute=27)
-    end_time = dtime(hour=10, minute=2)
+    start_time = dtime(hour=9, minute=59)
+    end_time = dtime(hour=10, minute=4)
     #interval = timedelta(seconds=0)  # 10 saniyelik aralık
     while True:
         current_time = datetime.now().time()

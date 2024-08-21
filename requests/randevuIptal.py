@@ -116,12 +116,13 @@ def process_user(user_info, log_directory):
     jwtToken = Authentication(user_info, hospital_payload, log_directory)
 
 if __name__ == '__main__':
-    log_directory = '/Users/btcyz155/Desktop/mhrs_test/AccessToken/loglar'
+    log_directory = '/Users/btcyz155/Desktop/projects/kisisel/mhrsRandevu/log'
     users = [
 
         {"tckn": "33790402648", "password": "Trgtosmn23", "hastaneBilgisi": "testElazig1"},
         {"tckn": "33808402042", "password": "Bahar.23", "hastaneBilgisi": "testElazig1"},
         {"tckn": "14455884436", "password": "Busra111C", "hastaneBilgisi": "testElazig1"},
+        {"tckn": "12097654868", "password": "Sahra2019", "hastaneBilgisi": "sisliCemilTasciogluSehirHast"},
     ]
     """
         {'ip': '104.239.108.19', 'port': 6254, 'user': 'AxKN3fd4', 'password': 'AxKN3fd4'},

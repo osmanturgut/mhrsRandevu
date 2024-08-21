@@ -1,27 +1,19 @@
 import asyncio
 from myUserRequests import main
-
-"""
-    {"tckn": "48991942770", "password": "Ada123456", "hastaneBilgisi": "gaziosmanpasaEAH"}, # Gop veya cemil taşçı 23 ağustostan sonra alın
-    {"tckn": "24680556220", "password": "Ada123456", "hastaneBilgisi": "sisliCemilTasciogluSehirHast"}, # talep sisliCemilTasciogluSehirHast
-    {"tckn": "46904013838", "password": "İkra3434", "hastaneBilgisi": "basaksehirCamveSakuraSehirHast"}, # talep basaksehirCamveSakuraSehirHast
-    {"tckn": "27883933676", "password": "Sahra2019", "hastaneBilgisi": "bakirkoySadiKonukEAH"}, # talep bakirkoySadiKonukEAH
-    
-
-
-
 """
 
-users3 = [
-    {"tckn": "24485738944", "password": "Ucel5432", "hastaneBilgisi": "gaziosmanpasaEAH"},
-    {"tckn": "47392303494", "password": "Ucel5432", "hastaneBilgisi": "gaziosmanpasaEAH"},
-    {"tckn": "17837318390", "password": "Ucel1234", "hastaneBilgisi": "sisliCemilTasciogluSehirHast"},
-    {"tckn": "36217675748", "password": "Ucel1234", "hastaneBilgisi": "sisliCemilTasciogluSehirHast"},
     {"tckn": "31540279540", "password": "Ada123456", "hastaneBilgisi": "sisliCemilTasciogluSehirHast"},
+    {"tckn": "24485738944", "password": "Ucel5432", "hastaneBilgisi": "sisliCemilTasciogluSehirHast"},
+    {"tckn": "47392303494", "password": "Ucel5432", "hastaneBilgisi": "sisliCemilTasciogluSehirHast"},
+    {"tckn": "17837318390", "password": "Ucel1234", "hastaneBilgisi": "gaziosmanpasaEAH"},
+    {"tckn": "36217675748", "password": "Ucel1234", "hastaneBilgisi": "gaziosmanpasaEAH"},
+"""
+users2 = [
 
 ]
 
 ip_infos = [
+
 
     {'ip': '104.239.108.92', 'port': 6327, 'user': 'hrhsxjqr', 'password': 'gr9p1s6mvw2v'},
     {'ip': '104.239.108.143', 'port': 6378, 'user': 'hrhsxjqr', 'password': 'gr9p1s6mvw2v'},
@@ -45,4 +37,4 @@ ip_infos = [
 
 
 if __name__ == "__main__":
-    asyncio.run(main(users3, ip_infos))
+    asyncio.run(main(users2, ip_infos))

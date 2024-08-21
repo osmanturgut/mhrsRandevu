@@ -8,6 +8,15 @@ payloads ={
         "ekRandevu": True,
         "randevuZamaniList": []
     },
+    "bingolDevletHastanesi": {
+        "aksiyonId": 200,
+        "mhrsIlId": 12,
+        "mhrsKlinikId": 211,
+        "mhrsKurumId": 5116,
+        "tumRandevular": False,
+        "ekRandevu": True,
+        "randevuZamaniList": []
+    },
     "testElazig": {
         "aksiyonId": 200,
         "mhrsIlId": 23,
@@ -45,6 +54,15 @@ payloads ={
         "ekRandevu": True,
         "randevuZamaniList": []
     },
+    "ElazigFethisekinEriskin": {
+        "aksiyonId": 200,
+        "mhrsIlId": 23,
+        "mhrsKlinikId": 210,
+        "mhrsKurumId": 656194,
+        "tumRandevular": False,
+        "ekRandevu": True,
+        "randevuZamaniList": []
+    },
     "sultanGaziFatihHasekiEAH": {
         "aksiyonId": 200,
         "mhrsIlId": 341,
@@ -65,7 +83,7 @@ payloads ={
         "ekRandevu": True,
         "randevuZamaniList": []
     },
-    "bakırkoySadiKonukEAH": {
+    "bakirkoySadiKonukEAH": {
         "aksiyonId": 200,
         "mhrsIlId": 341,
         "mhrsIlceId": 1166,
@@ -81,6 +99,26 @@ payloads ={
         "mhrsIlceId": 2004,
         "mhrsKlinikId": 211,
         "mhrsKurumId": 183567,
+        "tumRandevular": False,
+        "ekRandevu": True,
+        "randevuZamaniList": []
+    },
+    "pendikEAR": {
+        "aksiyonId": 200,
+        "mhrsIlId": 342,
+        "mhrsIlceId": 1835,
+        "mhrsKlinikId": 211,
+        "mhrsKurumId": 395236,
+        "tumRandevular": False,
+        "ekRandevu": True,
+        "randevuZamaniList": []
+    },
+    "hamidiyeEftalEarEkHizmetÇocukPsikiyatrisi": {
+        "aksiyonId": 200,
+        "mhrsIlId": 342,
+        "mhrsIlceId": 1604,
+        "mhrsKlinikId": 181,
+        "mhrsKurumId": 5789,
         "tumRandevular": False,
         "ekRandevu": True,
         "randevuZamaniList": []
@@ -104,10 +142,29 @@ payloads ={
         "ekRandevu": True,
         "randevuZamaniList": []
     },
+    "cizreDevletHastanesiEriskin": {
+        "aksiyonId": 200,
+        "mhrsIlId": 73,
+        "mhrsIlceId": 1223,
+        "mhrsKlinikId": 210,
+        "mhrsKurumId": 174,
+        "tumRandevular": False,
+        "ekRandevu": True,
+        "randevuZamaniList": []
+    },
     "sirnakDevletHastanesi": {
         "aksiyonId": 200,
         "mhrsIlId": 73,
         "mhrsKlinikId": 211,
+        "mhrsKurumId": 166,
+        "tumRandevular": False,
+        "ekRandevu": True,
+        "randevuZamaniList": []
+    },
+    "sirnakDevletHastanesiEriskin": {
+        "aksiyonId": 200,
+        "mhrsIlId": 73,
+        "mhrsKlinikId": 210,
         "mhrsKurumId": 166,
         "tumRandevular": False,
         "ekRandevu": True,
@@ -209,6 +266,26 @@ payloads ={
         "mhrsIlceId": 2050,
         "mhrsKlinikId": 211,
         "mhrsKurumId": 187596,
+        "tumRandevular": False,
+        "ekRandevu": True,
+        "randevuZamaniList": []
+    },
+    "basaksehirCamveSakuraSehirHastEriskin": {
+        "aksiyonId": 200,
+        "mhrsIlId": 341,
+        "mhrsIlceId": 2050,
+        "mhrsKlinikId": 210,
+        "mhrsKurumId": 27911,
+        "tumRandevular": False,
+        "ekRandevu": True,
+        "randevuZamaniList": []
+    },
+    "basaksehirCamveSakuraSehirHastCocukNorolojisi": {
+        "aksiyonId": 200,
+        "mhrsIlId": 341,
+        "mhrsIlceId": 2050,
+        "mhrsKlinikId": 129,
+        "mhrsKurumId": 27911,
         "tumRandevular": False,
         "ekRandevu": True,
         "randevuZamaniList": []
