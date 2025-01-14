@@ -1,38 +1,31 @@
 import asyncio
 from myUserRequests import main
 """
-
-    {"tckn": "31540279540", "password": "Ada123456", "hastaneBilgisi": "sisliCemilTasciogluSehirHast"},
-    {"tckn": "24485738944", "password": "Ucel5432", "hastaneBilgisi": "sisliCemilTasciogluSehirHast"},
-    {"tckn": "47392303494", "password": "Ucel5432", "hastaneBilgisi": "sisliCemilTasciogluSehirHast"},
-    {"tckn": "17837318390", "password": "Ucel1234", "hastaneBilgisi": "gaziosmanpasaEAH"},
-    {"tckn": "36217675748", "password": "Ucel1234", "hastaneBilgisi": "gaziosmanpasaEAH"},
+TODO
 """
 users2 = [
+
+
 
 ]
 
 ip_infos = [
 
+    {'ip': '104.239.108.200', 'port': 6435, 'user': 'mbxkenmx', 'password': 'iaulboo6lqri'},
+    {'ip': '104.239.108.238', 'port': 6473, 'user': 'mbxkenmx', 'password': 'iaulboo6lqri'},
+    {'ip': '104.239.108.237', 'port': 6472, 'user': 'mbxkenmx', 'password': 'iaulboo6lqri'},
+    {'ip': '104.239.108.18', 'port': 6253, 'user': 'wjuxh3ZK', 'password': 'r4197bqezuc9'},
+    {'ip': '104.239.108.144', 'port': 6379, 'user': 'wjuxh3ZK', 'password': 'r4197bqezuc9'},
+    {'ip': '104.239.108.154', 'port': 6389, 'user': 'wjuxh3ZK', 'password': 'r4197bqezuc9'},
+    {'ip': '104.239.108.227', 'port': 6462, 'user': 'mbxkenmx', 'password': 'iaulboo6lqri'},
+    {'ip': '104.239.108.49', 'port': 6284, 'user': 'mbxkenmx', 'password': 'iaulboo6lqri'},
+    {'ip': '104.239.108.107', 'port': 6342, 'user': 'wjuxh3ZK', 'password': 'r4197bqezuc9'},
+    {'ip': '104.239.108.175', 'port': 6410, 'user': 'wjuxh3ZK', 'password': 'r4197bqezuc9'},
+    {'ip': '104.239.108.138', 'port': 6373, 'user': 'wjuxh3ZK', 'password': 'r4197bqezuc9'},
+    {'ip': '104.239.108.242', 'port': 6477, 'user': 'wjuxh3ZK', 'password': 'r4197bqezuc9'},
 
-    {'ip': '104.239.108.92', 'port': 6327, 'user': 'hrhsxjqr', 'password': 'gr9p1s6mvw2v'},
-    {'ip': '104.239.108.143', 'port': 6378, 'user': 'hrhsxjqr', 'password': 'gr9p1s6mvw2v'},
-    {'ip': '104.239.108.5', 'port': 6240, 'user': 'hrhsxjqr', 'password': 'gr9p1s6mvw2v'},
-    {'ip': '104.239.108.209', 'port': 6444, 'user': 'hrhsxjqr', 'password': 'gr9p1s6mvw2v'},
-    {'ip': '104.239.108.19', 'port': 6254, 'user': 'hrhsxjqr', 'password': 'gr9p1s6mvw2v'},
-    {'ip': '104.239.108.149', 'port': 6384, 'user': 'hrhsxjqr', 'password': 'gr9p1s6mvw2v'},
-    {'ip': '104.239.108.33', 'port': 6268, 'user': 'hrhsxjqr', 'password': 'gr9p1s6mvw2v'},
-    {'ip': '104.239.108.244', 'port': 6479, 'user': 'hrhsxjqr', 'password': 'gr9p1s6mvw2v'},
-    {'ip': '104.239.108.124', 'port': 6359, 'user': 'hrhsxjqr', 'password': 'gr9p1s6mvw2v'},
-    {'ip': '104.239.108.202', 'port': 6437, 'user': 'hrhsxjqr', 'password': 'gr9p1s6mvw2v'},
-    {'ip': '104.239.108.207', 'port': 6442, 'user': 'hrhsxjqr', 'password': 'gr9p1s6mvw2v'},
-    {'ip': '104.239.108.81', 'port': 6316, 'user': 'hrhsxjqr', 'password': 'gr9p1s6mvw2v'},
-    {'ip': '104.239.108.91', 'port': 6326, 'user': 'hrhsxjqr', 'password': 'gr9p1s6mvw2v'},
-    {'ip': '104.239.108.26', 'port': 6261, 'user': 'hrhsxjqr', 'password': 'gr9p1s6mvw2v'},
-    {'ip': '104.239.108.178', 'port': 6413, 'user': 'hrhsxjqr', 'password': 'gr9p1s6mvw2v'},
-    {'ip': '104.239.108.77', 'port': 6312, 'user': 'hrhsxjqr', 'password': 'gr9p1s6mvw2v'},
-    {'ip': '104.239.108.177', 'port': 6412, 'user': 'hrhsxjqr', 'password': 'gr9p1s6mvw2v'},
-    {'ip': '104.239.108.94', 'port': 6329, 'user': 'hrhsxjqr', 'password': 'gr9p1s6mvw2v'},
+
+
 ]
 
 

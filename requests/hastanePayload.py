@@ -20,11 +20,12 @@ payloads ={
     "testElazig": {
         "aksiyonId": 200,
         "mhrsIlId": 23,
-        "mhrsKlinikId": 157,
-        "mhrsKurumId": 6495,
+        "mhrsKlinikId": 196,
+        "mhrsHekimId": 97167,
+        "mhrsKurumId": 656194,
         "tumRandevular": False,
         "ekRandevu": True,
-        "randevuZamaniList": [],
+        "randevuZamaniList": ["1"],
     },
     "kadindogum": {
         "aksiyonId": 200,
@@ -103,6 +104,26 @@ payloads ={
         "ekRandevu": True,
         "randevuZamaniList": []
     },
+    "bagcilarEAHGoz": {
+        "aksiyonId": 200,
+        "mhrsIlId": 341,
+        "mhrsIlceId": 2004,
+        "mhrsKlinikId": 151,
+        "mhrsKurumId": 183567,
+        "tumRandevular": False,
+        "ekRandevu": True,
+        "randevuZamaniList": []
+    },
+    "baltaLimaniKemikHastalıklariEAH": {
+        "aksiyonId": 200,
+        "mhrsIlId": 341,
+        "mhrsIlceId": 1604,
+        "mhrsKlinikId": 137,
+        "mhrsKurumId": 3359,
+        "tumRandevular": False,
+        "ekRandevu": True,
+        "randevuZamaniList": []
+    },
     "pendikEAR": {
         "aksiyonId": 200,
         "mhrsIlId": 342,
@@ -118,6 +139,29 @@ payloads ={
         "mhrsIlId": 342,
         "mhrsIlceId": 1604,
         "mhrsKlinikId": 181,
+        "mhrsKurumId": 5789,
+        "tumRandevular": False,
+        "ekRandevu": True,
+        "randevuZamaniList": []
+    },
+    "sisliHamidiyeEftalCocukPsikiyatrisiMeryemTan": {
+        "aksiyonId": 200,
+        "mhrsIlId": 341,
+        "mhrsIlceId": 1663,
+        "mhrsKlinikId": 134,
+        "mhrsHekimId": 42497,
+        "mhrsKurumId": 3324,
+        "muayeneYeriId": -1,
+        "tumRandevular": False,
+        "ekRandevu": True,
+        "randevuZamaniList": []
+    },
+    "sisliHamidiyeEftalCocukPsikiyatrisiMeryemTan2": {
+        "aksiyonId": 200,
+        "mhrsIlId": 341,
+        "mhrsIlceId": 1604,
+        "mhrsKlinikId": 134,
+        "mhrsHekimId": 42497,
         "mhrsKurumId": 5789,
         "tumRandevular": False,
         "ekRandevu": True,
@@ -179,6 +223,18 @@ payloads ={
         "tumRandevular": False,
         "ekRandevu": True,
         "randevuZamaniList": []
+    },
+    "kosuyoluEAH": {
+        "aksiyonId": 200,
+        "baslangicZamani": "2024-12-30 23:16:33",
+        "bitisZamani": "2025-01-09 17:16:43",
+        "mhrsIlId": 342,
+        "mhrsIlceId": 1449,
+        "mhrsKlinikId": 163,
+        "mhrsKurumId": 3401,
+          "randevuZamaniList": ["1","2"],
+        "ekRandevu": True,
+        "tumRandevular": False
     },
     "kadikoySuleymanYalcinDevletHastanesi": {
         "aksiyonId": 200,
@@ -331,6 +387,29 @@ payloads ={
         "ekRandevu": True,
         "randevuZamaniList": []
     },
+    "KanuniSultanSuleymanEAHFizikselTıpVeRHBT": {
+        "aksiyonId": 200,
+        "mhrsIlId": 341,
+        "mhrsIlceId": 1823,
+        "mhrsKlinikId": 142,
+        "mhrsKurumId": 426876,
+        "mhrsHekimId": 495971,
+        "tumRandevular": False,
+        "ekRandevu": True,
+        "randevuZamaniList": []
+    },
+
+    "HaydarpaşaNumuneHastCildiye": {
+        "aksiyonId": 200,
+        "mhrsIlId": 342,
+        "mhrsIlceId": 1708,
+        "mhrsKlinikId": 136,
+        "mhrsKurumId": 3305,
+        "mhrsHekimId": -1,
+        "tumRandevular": False,
+        "ekRandevu": True,
+        "randevuZamaniList": []
+    },
     "avcilarMuratKolukDevletHastanesi": {
         "aksiyonId": 200,
         "mhrsIlId": 341,
@@ -357,6 +436,16 @@ payloads ={
         "mhrsIlceId": 1336,
         "mhrsKlinikId": 134,
         "mhrsKurumId": 3407,
+        "tumRandevular": False,
+        "ekRandevu": True,
+        "randevuZamaniList": []
+    },
+    "EyupDevletHastanesi": {
+        "aksiyonId": 200,
+        "mhrsIlId": 341,
+        "mhrsIlceId": 1325,
+        "mhrsKlinikId": 211,
+        "mhrsKurumId": 177295,
         "tumRandevular": False,
         "ekRandevu": True,
         "randevuZamaniList": []

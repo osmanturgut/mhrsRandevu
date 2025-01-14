@@ -20,8 +20,7 @@ def run_scheduled(start_time_str, end_time_str, kacSaniyedeBir=360, kacSaniyeCal
         time.sleep(kacSaniyedeBir)
 
 if __name__ == "__main__":
-    # Başlangıç ve bitiş tarihlerini manuel olarak ayarlayın
-    start_time_input = "2024-08-09 15:48:47"
-    end_time_input = "2024-09-09 07:40:00"
+    start_time_input = "2024-12-01 00:34:52"
+    end_time_input = "2025-12-01 09:50:40"
 
     run_scheduled(start_time_input, end_time_input)

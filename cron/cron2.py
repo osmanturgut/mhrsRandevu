@@ -2,7 +2,7 @@ import subprocess
 import datetime
 import time
 
-def run_scheduled(start_time_str, end_time_str, kacSaniyedeBir=600, kacSaniyeCalissin=4):
+def run_scheduled(start_time_str, end_time_str, kacSaniyedeBir=6, kacSaniyeCalissin=4):
     start_time = datetime.datetime.strptime(start_time_str, "%Y-%m-%d %H:%M:%S")
     end_time = datetime.datetime.strptime(end_time_str, "%Y-%m-%d %H:%M:%S")
 
@@ -20,8 +20,7 @@ def run_scheduled(start_time_str, end_time_str, kacSaniyedeBir=600, kacSaniyeCal
         time.sleep(kacSaniyedeBir)
 
 if __name__ == "__main__":
-    # Başlangıç ve bitiş tarihlerini manuel olarak ayarlayın
-    start_time_input = "2024-08-18 10:06:55"
-    end_time_input = "2024-10-18 09:50:00"
+    start_time_input = "2024-12-01 00:32:52"
+    end_time_input = "2025-12-01 09:50:40"
 
     run_scheduled(start_time_input, end_time_input)
