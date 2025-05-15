@@ -8,6 +8,48 @@ payloads ={
         "ekRandevu": True,
         "randevuZamaniList": []
     },
+    "paluDis": {
+        "aksiyonId": 200,
+        "mhrsIlId": 23,
+        "mhrsIlceId": 1566,
+        "mhrsKlinikId": 198,
+        "baslangicZamani": "2025-04-08 12:54:29",
+        "bitisZamani": "2025-04-12 18:54:29",
+        "mhrsKurumId": 6495,
+        "mhrsHekimId": -1,
+        "muayeneYeriId": -1,
+        "tumRandevular": False,
+        "ekRandevu": True,
+        "randevuZamaniList": [1]
+    },
+    "bursaKbb": {
+        "aksiyonId": 200,
+        "mhrsIlId": 16,
+        "mhrsIlceId": 1832,
+        "mhrsKlinikId": 165,
+        "baslangicZamani": "2025-04-15 12:54:29",
+        "bitisZamani": "2025-04-12 17:54:29",
+        "mhrsKurumId": 177154,
+        "mhrsHekimId": -1,
+        "muayeneYeriId": -1,
+        "tumRandevular": False,
+        "ekRandevu": True,
+        "randevuZamaniList": [1]
+    },
+    "kovancilarKBB": {
+        "aksiyonId": 200,
+        "mhrsIlId": 23,
+        "mhrsIlceId": 1820,
+        "mhrsKlinikId": 165,
+        "baslangicZamani": "2025-04-11 12:54:29",
+        "bitisZamani": "2025-04-12 18:54:29",
+        "mhrsKurumId": 8488,
+        "mhrsHekimId": -1,
+        "muayeneYeriId": -1,
+        "tumRandevular": False,
+        "ekRandevu": True,
+        "randevuZamaniList": []
+    },
     "bingolDevletHastanesi": {
         "aksiyonId": 200,
         "mhrsIlId": 12,
@@ -17,26 +59,28 @@ payloads ={
         "ekRandevu": True,
         "randevuZamaniList": []
     },
-    "testElazig": {
+    "fethiSekinDahiliye": {
         "aksiyonId": 200,
         "mhrsIlId": 23,
-        "mhrsKlinikId": 196,
-        "mhrsHekimId": 97167,
+        "mhrsIlceId": 1298,
+        "mhrsKlinikId": 157,
         "mhrsKurumId": 656194,
         "tumRandevular": False,
         "ekRandevu": True,
-        "randevuZamaniList": ["1"],
+        "baslangicZamani": "2025-04-21 09:20:29",
+        "bitisZamani": "2025-04-21 13:54:29",
+        "randevuZamaniList": [1],
     },
-    "kadindogum": {
+    "dahiliyeNumuneHast": {
         "aksiyonId": 200,
-        "mhrsHekimId": 83833,
-        "mhrsIlId": 23,
-        "mhrsKlinikId": 161,
-        "mhrsKurumId": 656194,
-        "muayeneYeriId": 7313571,
+        "mhrsHekimId": 48438,
+        "mhrsIlId": 342,
+        "mhrsIlceId": 1708,
+        "mhrsKlinikId": 157,
+        "mhrsKurumId": 3305,
+        "muayeneYeriId": 7071334,
         "tumRandevular": False,
         "ekRandevu": True,
-        "randevuZamaniList": [],
     },
     "testElazig1": {
         "aksiyonId": 200,
@@ -64,12 +108,14 @@ payloads ={
         "ekRandevu": True,
         "randevuZamaniList": []
     },
-    "sultanGaziFatihHasekiEAH": {
+
+    "sultanGaziFatihHasekiEAHCocukPsikiyatr": {
         "aksiyonId": 200,
         "mhrsIlId": 341,
         "mhrsIlceId": 2055,
-        "mhrsKlinikId": 211,
-        "mhrsKurumId": 3384,
+        "mhrsKlinikId": 134,
+        "mhrsKurumId": 5796,
+        "muayeneYeriId": -1,
         "tumRandevular": False,
         "ekRandevu": True,
         "randevuZamaniList": []
@@ -130,6 +176,16 @@ payloads ={
         "mhrsIlceId": 1835,
         "mhrsKlinikId": 211,
         "mhrsKurumId": 395236,
+        "tumRandevular": False,
+        "ekRandevu": True,
+        "randevuZamaniList": []
+    },
+    "hamidiyeEftalEarCozger": {
+        "aksiyonId": 200,
+        "mhrsIlId": 341,
+        "mhrsIlceId": 1604,
+        "mhrsKlinikId": 211,
+        "mhrsKurumId": 3324,
         "tumRandevular": False,
         "ekRandevu": True,
         "randevuZamaniList": []
@@ -226,13 +282,25 @@ payloads ={
     },
     "kosuyoluEAH": {
         "aksiyonId": 200,
-        "baslangicZamani": "2024-12-30 23:16:33",
-        "bitisZamani": "2025-01-09 17:16:43",
+        "baslangicZamani": "2025-05-07 23:16:33",
+        "bitisZamani": "2025-05-09 17:16:43",
         "mhrsIlId": 342,
         "mhrsIlceId": 1449,
         "mhrsKlinikId": 163,
         "mhrsKurumId": 3401,
-          "randevuZamaniList": ["1","2"],
+        "randevuZamaniList": ["1","2"],
+        "ekRandevu": True,
+        "tumRandevular": False
+    },
+    "silivriCildiye": {
+        "aksiyonId": 200,
+        "baslangicZamani": "2025-05-10 23:16:33",
+        "bitisZamani": "2025-05-15 17:16:43",
+        "mhrsIlId": 341,
+        "mhrsIlceId": 1622,
+        "mhrsKlinikId": 136,
+        "mhrsKurumId": 3294,
+        "randevuZamaniList": ["1", "2"],
         "ekRandevu": True,
         "tumRandevular": False
     },
@@ -276,12 +344,23 @@ payloads ={
         "ekRandevu": True,
         "randevuZamaniList": []
     },
-    "sultangaziHasekiEAH": {
+    "sultangaziHasekiEAH": { #daha önce alabildi
         "aksiyonId": 200,
         "mhrsIlId": 341,
         "mhrsIlceId": 2055,
         "mhrsKlinikId": 211,
-        "mhrsKurumId": 5796,
+        "mhrsKurumId": -1, #5796 
+        "tumRandevular": False,
+        "ekRandevu": True,
+        "randevuZamaniList": []
+    },
+    "sultanGaziFatihHasekiEAH": {
+        "aksiyonId": 200,
+        "mhrsIlId": 341,
+        "mhrsIlceId": 2055,
+        "mhrsKlinikId": 211,
+        "mhrsKurumId": 3384,
+        "muayeneYeriId": -1,
         "tumRandevular": False,
         "ekRandevu": True,
         "randevuZamaniList": []
@@ -404,6 +483,64 @@ payloads ={
         "mhrsIlId": 342,
         "mhrsIlceId": 1708,
         "mhrsKlinikId": 136,
+        "baslangicZamani": "2025-02-11 15:58:10",
+        "bitisZamani": "2025-02-12 15:58:12",
+        "mhrsKurumId": 3305,
+        "mhrsHekimId": -1,
+        "muayeneYeriId": 10149749,
+        "tumRandevular": False,
+        "ekRandevu": True,
+        "randevuZamaniList": []
+    },
+
+    "HaydarpaşaNumuneHastGoz": {
+        "aksiyonId": 200,
+        "mhrsIlId": 342,
+        "mhrsIlceId": 1708,
+        "mhrsKlinikId": 151,
+        "baslangicZamani": "2025-03-12 08:03:00",
+        "bitisZamani": "2025-03-12 15:03:04",
+        "mhrsKurumId": 3305,
+        "mhrsHekimId": -1,
+        "muayeneYeriId": -1,
+        "tumRandevular": False,
+        "ekRandevu": True,
+        "randevuZamaniList": [1]
+    },
+    "HaydarpasaNumuneHastDahiliyeYeldegirmeni": {
+        "aksiyonId": 200,
+        "mhrsIlId": 342,
+        "mhrsIlceId": 1708,
+        "mhrsKlinikId": 157,
+        "baslangicZamani": "2025-02-28 08:00:21",
+        "bitisZamani": "2025-02-28 08:30:21",
+        "mhrsKurumId": 188020,
+        "mhrsHekimId": -1,
+        "tumRandevular": False,
+        "ekRandevu": True,
+        "randevuZamaniList": [1]
+    },
+    "HaydarpaşaNumuneHastCildiye2": {
+        "aksiyonId": 200,
+        "mhrsIlId": 342,
+        "mhrsIlceId": 1708,
+        "mhrsKlinikId": 136,
+        "baslangicZamani": "2025-02-11 15:58:10",
+        "bitisZamani": "2025-02-12 15:58:12",
+        "mhrsKurumId": 3305,
+        "mhrsHekimId": -1,
+        "muayeneYeriId": 10045300,
+        "tumRandevular": False,
+        "ekRandevu": True,
+        "randevuZamaniList": []
+    },
+    "HaydarpaşaNumuneHastKBB": {
+        "aksiyonId": 200,
+        "mhrsIlId": 342,
+        "mhrsIlceId": 1708,
+        "mhrsKlinikId": 165,
+        "baslangicZamani": "2025-02-11 14:20:06",
+        "bitisZamani": "2025-02-12 10:20:13",
         "mhrsKurumId": 3305,
         "mhrsHekimId": -1,
         "tumRandevular": False,

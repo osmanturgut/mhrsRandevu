@@ -1,12 +1,12 @@
-# myUserRequests.py
-
 import asyncio
 import aiohttp
 from telegram import Bot
-from hastanePayload import get_hospital_payload
 import logging
 import random
+import pytz
+from datetime import datetime, timedelta
 
+from hastanePayload import get_hospital_payload
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
 logger = logging.getLogger(__name__)
@@ -40,12 +40,9 @@ class Authentication:
                 self.headers = {'Content-Type': 'application/json', 'Authorization': f'Bearer {tokens}'}
                 if self.userName:
                     await self.ebeveynden_cocuga_gecis()
-
                 await self.randevulari_filtrele()
             else:
                 raise Exception('Token alınamadı')
-                data = await response.json()
-                print(data)
 
     async def ebeveynden_cocuga_gecis(self):
         ad_aranan = f"{self.userName}"
@@ -67,24 +64,52 @@ class Authentication:
                 return data
 
     async def randevulari_filtrele(self):
-        local_available_slots = []
+        local_available_slots = []  # Uygun randevuları burada tutacağız
+        max_bekleme_suresi = timedelta(hours=14)  # Maksimum bekleme süresi, dışarıdan dinamik olarak değiştirilebilir
+
         while not self.randevu_alindi:
             logger.info(f"randevu aranıyor. {self.tckn} IP={self.selected_ip.split('@')[1]}")
-            slotListRequest = await self.randevu_arama()
+            slotListRequest = await self.randevu_arama()  # Randevu araması yapılır
             if slotListRequest and slotListRequest.get('success'):
                 for hekim_slot in slotListRequest['data'][0]['hekimSlotList']:
                     for muayene_yeri_slot in hekim_slot['muayeneYeriSlotList']:
                         for slot in muayene_yeri_slot['saatSlotList']:
                             for slotListKalanKullanim in slot['slotList']:
-                                if slotListKalanKullanim['slot']['kalanKullanim'] > 0:
-                                    local_available_slots.append(slotListKalanKullanim)
+                                if slotListKalanKullanim['slot'][
+                                    'kalanKullanim'] > 0:  # Kullanılabilir randevuları kontrol et
+                                    baslangic_zamani_str = slotListKalanKullanim['slot']['baslangicZamani']
+                                    baslangic_zamani = datetime.strptime(baslangic_zamani_str, "%Y-%m-%d %H:%M:%S")
+                                    baslangic_zamani = baslangic_zamani.replace(tzinfo=pytz.timezone("Europe/Istanbul"))
+                                    local_now = datetime.now(pytz.timezone("Europe/Istanbul"))
+                                    fark = baslangic_zamani - local_now  # Zaman farkını hesapla
 
-                if local_available_slots:
-                    try:
-                        selected_slot = random.choice(local_available_slots)
-                        await self.randevuTanimla(selected_slot)
-                    except Exception as e:
-                        logger.error(f"Exception in randevuTanimla: {e}")
+                                    # Eğer fark 15 saatin altındaysa aramaya devam et
+                                    if fark <= max_bekleme_suresi:
+                                        continue  # 15 saatten azsa, geç ve aramaya devam et
+
+                                    # 15 saatten fazla bir randevu bulduğunda bunu local_available_slots'a ekle
+                                    local_available_slots.append(slotListKalanKullanim)  # 15 saatten fazla randevuyu al
+
+                                    # Loglama: Kalan süreyi hesapla ve logla
+                                    fark_hours, remainder = divmod(fark.seconds, 3600)
+                                    fark_minutes, _ = divmod(remainder, 60)
+                                    formatted_fark = f"{fark_hours} Saat {fark_minutes} Dakika"
+                                    logger.info(
+                                        f"Randevunun Başlangıç Zamanı: {baslangic_zamani} | Kalan Süre: {formatted_fark}")
+
+                                    # Telegram'a bildirim gönder
+                                    await self.send_telegram_notification(
+                                        [f"Randevu Tarihi: {baslangic_zamani} | Kalan Süre: {formatted_fark}"])
+
+            # Eğer uygun bir randevu varsa, onu al
+            if local_available_slots:
+                try:
+                    selected_slot = random.choice(local_available_slots)  # Uygun bir randevu seç
+                    await self.randevuTanimla(selected_slot)  # Randevu tanımla (almaya başla)
+                    self.randevu_alindi = True  # Randevu alındı
+                    logger.info(f"Randevu alındı: {selected_slot}")
+                except Exception as e:
+                    logger.error(f"Exception in randevuTanimla: {e}")
 
     async def randevuTanimla(self, slotListKalanKullanim):
         slot = slotListKalanKullanim['slot']
@@ -152,7 +177,7 @@ async def process_user(session, user_info, primary_hospital_payload, secondary_h
     else:
         await auth.process_notifications()
 
-async def main(users, ip_infos):
+async def dateTime(users, ip_infos):
     primary_hospital_payloads = [get_hospital_payload(user["hastaneBilgisi"]) for user in users]
     secondary_hospital_payloads = [get_hospital_payload(user.get("ikinciHastaneBilgisi")) for user in users]
 
